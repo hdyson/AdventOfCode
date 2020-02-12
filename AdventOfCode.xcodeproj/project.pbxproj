@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F4DBA5D823F4A06400438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
+		F4DBA5E623F4A23800438201 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5E523F4A23800438201 /* Tests.swift */; };
+		F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +27,20 @@
 /* Begin PBXFileReference section */
 		F4DBA5D423F4A06400438201 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DBA5D723F4A06400438201 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F4DBA5E323F4A23800438201 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4DBA5E523F4A23800438201 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		F4DBA5E723F4A23800438201 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F4DBA5D123F4A06400438201 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4DBA5E023F4A23800438201 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				F4DBA5D623F4A06400438201 /* AdventOfCode */,
+				F4DBA5E423F4A23800438201 /* Tests */,
 				F4DBA5D523F4A06400438201 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				F4DBA5D423F4A06400438201 /* AdventOfCode */,
+				F4DBA5E323F4A23800438201 /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +74,15 @@
 				F4DBA5D723F4A06400438201 /* main.swift */,
 			);
 			path = AdventOfCode;
+			sourceTree = "<group>";
+		};
+		F4DBA5E423F4A23800438201 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F4DBA5E523F4A23800438201 /* Tests.swift */,
+				F4DBA5E723F4A23800438201 /* Info.plist */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +105,23 @@
 			productReference = F4DBA5D423F4A06400438201 /* AdventOfCode */;
 			productType = "com.apple.product-type.tool";
 		};
+		F4DBA5E223F4A23800438201 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4DBA5E823F4A23800438201 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				F4DBA5DF23F4A23800438201 /* Sources */,
+				F4DBA5E023F4A23800438201 /* Frameworks */,
+				F4DBA5E123F4A23800438201 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = F4DBA5E323F4A23800438201 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +133,9 @@
 				ORGANIZATIONNAME = "Harold Dyson";
 				TargetAttributes = {
 					F4DBA5D323F4A06400438201 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					F4DBA5E223F4A23800438201 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
@@ -111,9 +154,20 @@
 			projectRoot = "";
 			targets = (
 				F4DBA5D323F4A06400438201 /* AdventOfCode */,
+				F4DBA5E223F4A23800438201 /* Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4DBA5E123F4A23800438201 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F4DBA5D023F4A06400438201 /* Sources */ = {
@@ -121,6 +175,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4DBA5D823F4A06400438201 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4DBA5DF23F4A23800438201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */,
+				F4DBA5E623F4A23800438201 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +321,40 @@
 			};
 			name = Release;
 		};
+		F4DBA5E923F4A23800438201 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.hdyson.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F4DBA5EA23F4A23800438201 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.hdyson.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -275,6 +372,15 @@
 			buildConfigurations = (
 				F4DBA5DC23F4A06400438201 /* Debug */,
 				F4DBA5DD23F4A06400438201 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4DBA5E823F4A23800438201 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4DBA5E923F4A23800438201 /* Debug */,
+				F4DBA5EA23F4A23800438201 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
