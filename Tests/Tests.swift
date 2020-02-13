@@ -49,19 +49,19 @@ class TestDayOne: XCTestCase {
 
     func testPart2Example1() {
         let expected = 2
-        let actual = calculate_gross_module_fuel(mass: 14)
+        let actual = rocket.calculate_gross_module_fuel(mass: 14)
         XCTAssertTrue(actual == expected)
     }
 
     func testPart2Example2() {
         let expected = 966
-        let actual = calculate_gross_module_fuel(mass: 1969)
+        let actual = rocket.calculate_gross_module_fuel(mass: 1969)
         XCTAssertTrue(actual == expected)
     }
 
-    func testPart2Example1() {
+    func testPart2Example3() {
         let expected = 50346
-        let actual = calculate_gross_module_fuel(mass: 100756)
+        let actual = rocket.calculate_gross_module_fuel(mass: 100756)
         XCTAssertTrue(actual == expected)
     }
 }
