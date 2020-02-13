@@ -11,20 +11,26 @@ import Foundation
 
 class Rocket{
 
-    var total_fuel = 0
+    var total_fuel : Int
     var module_masses : String
     
     init(masses : String) {
         module_masses = masses
+        total_fuel = 0
     }
     
     func calculate_module_fuel(mass:Int) -> Int {
-        return Int(Float(mass)/3) - 2
+        var result = Int(Float(mass)/3.0) - 2
+        if result < 0 {
+            result = 0
+        }
+        return result
     }
 
     func calculate_total_fuel() {
         for line in module_masses.components(separatedBy: "\n") {
-            total_fuel += calculate_module_fuel(mass: Int(line) ?? 0)
+            let mass = Int(line) ?? 0
+            total_fuel += calculate_module_fuel(mass: mass)
         }
     }
 }
