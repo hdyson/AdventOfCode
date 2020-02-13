@@ -27,33 +27,42 @@ class TestDayOne: XCTestCase {
         let expected = 2
         let actual = rocket.calculate_module_fuel(mass: 12)
         XCTAssertTrue(actual == expected)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testPart1Example2() {
         let expected = 2
         let actual = rocket.calculate_module_fuel(mass: 14)
         XCTAssertTrue(actual == expected)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testPart1Example3() {
         let expected = 654
         let actual = rocket.calculate_module_fuel(mass: 1969)
         XCTAssertTrue(actual == expected)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testPart1Example4() {
         let expected = 33583
         let actual = rocket.calculate_module_fuel(mass: 100756)
         XCTAssertTrue(actual == expected)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
+    func testPart2Example1() {
+        let expected = 2
+        let actual = calculate_gross_module_fuel(mass: 14)
+        XCTAssertTrue(actual == expected)
+    }
+
+    func testPart2Example2() {
+        let expected = 966
+        let actual = calculate_gross_module_fuel(mass: 1969)
+        XCTAssertTrue(actual == expected)
+    }
+
+    func testPart2Example1() {
+        let expected = 50346
+        let actual = calculate_gross_module_fuel(mass: 100756)
+        XCTAssertTrue(actual == expected)
+    }
 }
 
