@@ -8,8 +8,34 @@
 
 import Foundation
 
+enum ParseError: Error {
+    case invalidOpcode(opcode: Int)
+}
 
-class Rocket{
+class DayTwoParser{
+    let separator=","
+    func parse(script:String) throws -> String {
+        let elementString = script.components(separatedBy: separator)
+        var elements = elementString.map{ Int($0)! }
+        if !valid_opcode(value: elements[0]) {
+            throw ParseError.invalidOpcode(opcode: elements[0])
+        }
+        let result_strings = elements.map{ String($0) }
+        return result_strings.joined(separator: separator)
+    }
+    
+    func valid_opcode(value: Int) -> Bool {
+        let valid_opcodes = [1, 2, 99]
+        var result = false
+        if valid_opcodes.contains(value)
+        {
+            result = true
+        }
+        return result
+    }
+}
+
+class DayOneRocket{
 
     var total_fuel : Int
     var module_masses : String
@@ -47,6 +73,7 @@ class Rocket{
 }
 
 
+
 if CommandLine.arguments.count < 2 {
     print("Needs to be called with an argument")
     exit(1)
@@ -54,7 +81,13 @@ if CommandLine.arguments.count < 2 {
 let filename = CommandLine.arguments[1]
 let contents = try String(contentsOfFile: filename)
 
-let rocket = Rocket(masses: contents)
-rocket.calculate_total_fuel()
-    
-print(rocket.total_fuel)
+//Day One
+//let rocket = DayOneRocket(masses: contents)
+//rocket.calculate_total_fuel()
+//let result = rocket.total_fuel
+
+//Day Two
+let parser = DayTwoParser()
+let result = try! parser.parse(script: contents)
+
+print(result)

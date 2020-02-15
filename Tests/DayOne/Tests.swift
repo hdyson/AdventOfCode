@@ -13,7 +13,7 @@ import XCTest
 
 class TestDayOne: XCTestCase {
 
-    var rocket = Rocket(masses: "")
+    var rocket = DayOneRocket(masses: "")
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

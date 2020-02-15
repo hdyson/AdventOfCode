@@ -10,6 +10,7 @@
 		F4DBA5D823F4A06400438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
 		F4DBA5E623F4A23800438201 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5E523F4A23800438201 /* Tests.swift */; };
 		F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
+		F4F9733923F743B00092D992 /* TestDayTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F9733823F743B00092D992 /* TestDayTwo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,9 @@
 		F4DBA5E323F4A23800438201 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DBA5E523F4A23800438201 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		F4DBA5E723F4A23800438201 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4F9733823F743B00092D992 /* TestDayTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDayTwo.swift; sourceTree = "<group>"; };
+		F4F9733B23F744020092D992 /* input_day1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_day1.txt; sourceTree = "<group>"; };
+		F4F9733C23F744130092D992 /* input_day2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_day2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		F4DBA5CB23F4A06400438201 = {
 			isa = PBXGroup;
 			children = (
+				F4F9733A23F743EB0092D992 /* Inputs */,
 				F4DBA5D623F4A06400438201 /* AdventOfCode */,
 				F4DBA5E423F4A23800438201 /* Tests */,
 				F4DBA5D523F4A06400438201 /* Products */,
@@ -79,10 +84,36 @@
 		F4DBA5E423F4A23800438201 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F4DBA5E523F4A23800438201 /* Tests.swift */,
+				F4F9733523F743410092D992 /* DayTwo */,
+				F4F9733323F736E40092D992 /* DayOne */,
 				F4DBA5E723F4A23800438201 /* Info.plist */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		F4F9733323F736E40092D992 /* DayOne */ = {
+			isa = PBXGroup;
+			children = (
+				F4DBA5E523F4A23800438201 /* Tests.swift */,
+			);
+			path = DayOne;
+			sourceTree = "<group>";
+		};
+		F4F9733523F743410092D992 /* DayTwo */ = {
+			isa = PBXGroup;
+			children = (
+				F4F9733823F743B00092D992 /* TestDayTwo.swift */,
+			);
+			path = DayTwo;
+			sourceTree = "<group>";
+		};
+		F4F9733A23F743EB0092D992 /* Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				F4F9733C23F744130092D992 /* input_day2.txt */,
+				F4F9733B23F744020092D992 /* input_day1.txt */,
+			);
+			path = Inputs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +215,7 @@
 			files = (
 				F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */,
 				F4DBA5E623F4A23800438201 /* Tests.swift in Sources */,
+				F4F9733923F743B00092D992 /* TestDayTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
