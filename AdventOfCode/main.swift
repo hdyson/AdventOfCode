@@ -14,24 +14,30 @@ enum ParseError: Error {
 
 class DayTwoParser{
     let separator=","
+    var pc = 0  //programme counter
     func parse(script:String) throws -> String {
-        let elementString = script.components(separatedBy: separator)
+        let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
         var elements = elementString.map{ Int($0)! }
-        if !valid_opcode(value: elements[0]) {
-            throw ParseError.invalidOpcode(opcode: elements[0])
-        }
+        
+        // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
+        elements[1] = 12
+        elements[2] = 2
+        mainloop: repeat{
+            let opcode = elements[pc]
+            switch opcode {
+                case 1:
+                    elements[elements[pc + 3]] = elements[elements[pc + 1]] + elements[elements[pc + 2]]
+                case 2:
+                    elements[elements[pc + 3]] = elements[elements[pc + 1]] * elements[elements[pc + 2]]
+                case 99:
+                    break mainloop
+                default:
+                    throw ParseError.invalidOpcode(opcode: elements[pc])
+                }
+            pc += 4
+        } while true
         let result_strings = elements.map{ String($0) }
         return result_strings.joined(separator: separator)
-    }
-    
-    func valid_opcode(value: Int) -> Bool {
-        let valid_opcodes = [1, 2, 99]
-        var result = false
-        if valid_opcodes.contains(value)
-        {
-            result = true
-        }
-        return result
     }
 }
 
@@ -90,4 +96,5 @@ let contents = try String(contentsOfFile: filename)
 let parser = DayTwoParser()
 let result = try! parser.parse(script: contents)
 
-print(result)
+// Only want to print first value (see puzzle text again)
+print(result.components(separatedBy: ",")[0])
