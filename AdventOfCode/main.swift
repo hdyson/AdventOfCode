@@ -14,27 +14,36 @@ enum ParseError: Error {
 
 class DayTwoParser{
     let separator=","
-    var pc = 0  //programme counter
+    var instruction_pointer = 0
+
+    let noun : Int
+    let verb : Int
+    
+    init (noun: Int, verb: Int){
+        self.noun = noun
+        self.verb = verb
+    }
+    
     func parse(script:String) throws -> String {
         let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
         var elements = elementString.map{ Int($0)! }
         
         // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
-        elements[1] = 12
-        elements[2] = 2
+        elements[1] = noun
+        elements[2] = verb
         mainloop: repeat{
-            let opcode = elements[pc]
+            let opcode = elements[instruction_pointer]
             switch opcode {
                 case 1:
-                    elements[elements[pc + 3]] = elements[elements[pc + 1]] + elements[elements[pc + 2]]
+                    elements[elements[instruction_pointer + 3]] = elements[elements[instruction_pointer + 1]] + elements[elements[instruction_pointer + 2]]
                 case 2:
-                    elements[elements[pc + 3]] = elements[elements[pc + 1]] * elements[elements[pc + 2]]
+                    elements[elements[instruction_pointer + 3]] = elements[elements[instruction_pointer + 1]] * elements[elements[instruction_pointer + 2]]
                 case 99:
                     break mainloop
                 default:
-                    throw ParseError.invalidOpcode(opcode: elements[pc])
+                    throw ParseError.invalidOpcode(opcode: elements[instruction_pointer])
                 }
-            pc += 4
+            instruction_pointer += 4
         } while true
         let result_strings = elements.map{ String($0) }
         return result_strings.joined(separator: separator)
@@ -92,9 +101,23 @@ let contents = try String(contentsOfFile: filename)
 //rocket.calculate_total_fuel()
 //let result = rocket.total_fuel
 
-//Day Two
-let parser = DayTwoParser()
-let result = try! parser.parse(script: contents)
+//Day Two part 1
+//let parser = DayTwoParser(noun: 12, verb: 2)
+//let result = try! parser.parse(script: contents)
 
-// Only want to print first value (see puzzle text again)
-print(result.components(separatedBy: ",")[0])
+//Only want to print first value (see puzzle text again)
+//print(result.components(separatedBy: ",")[0])
+
+//Day Two part 2
+let target = 19690720
+outerloop: for noun in 0 ... 99 {
+    for verb in 0 ... 99 {
+        let parser = DayTwoParser(noun: noun, verb: verb)
+        let output = try! parser.parse(script: contents)
+        let result = Int(output.components(separatedBy: ",")[0])
+        if result == target {
+            print(100 * noun + verb)
+            break outerloop
+        }
+    }
+}
