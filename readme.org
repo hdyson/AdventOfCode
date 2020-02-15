@@ -1,0 +1,18 @@
+* Summary
+
+Using [[https://adventofcode.com][Advent of Code]] as an excuse to learn some
+Swift (so the code here won't be idiomatic, or polished; it's a repository for
+exploring and understanding).
+
+* Usage
+
+Build scheme options have to be updated in Xcode to spoecify correct input
+file per puzzle (assuming building and running within Xcode).  Input files are
+user-specific, so if you're not me, the ones in this repo won't work for you.
+
+* Swift resources
+
+1. [[https://swift.org/getting-started/][Swift getting started guide]]
+2. [[https://docs.swift.org/swift-book/][The swift book]]
+3. [[https://nshipster.com/swift-documentation/][Semi-official guide to docstrings in swift]]
+
