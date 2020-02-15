@@ -12,18 +12,37 @@ enum ParseError: Error {
     case invalidOpcode(opcode: Int)
 }
 
+/**
+Class to solve the day two puzzle of advent of code 2019
+
+The puzzle involves loading a list of integers, and interpreting them as a list of operators and operands (similar to a simplified turing machine)
+ 
+See https://adventofcode.com/2019/day/2 for the details of the puzzle being solved.
+ */
 class DayTwoParser{
     let separator=","
     var instruction_pointer = 0
 
     let noun : Int
     let verb : Int
-    
+    /**
+Basic initialiser
+ - Parameter noun: when parsing an instruction set, the first operand is replaced with this value.
+ - Parameter verb: when parsing an instruction set, the second operand is replaced with this value.
+
+     */
     init (noun: Int, verb: Int){
         self.noun = noun
         self.verb = verb
     }
     
+    /**
+     The bulk of the puzzle.
+     
+      Loads in a string from disc, sanitises it (removes whitespace, converts to array of Ints), and evaluates it.  The first and second operand are over-ridden from the noun and verb values from the initialiser.  All instructions use four ints.  The first is the Opcode (1 => addition, 2 => multiplication, 99 => end programme, no other valid values), the second and third are the operands.  The final int is the index of element.
+     - Parameter script: The script to parse
+     - Returns: Result string derived from script
+     */
     func parse(script:String) throws -> String {
         let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
         var elements = elementString.map{ Int($0)! }
@@ -109,6 +128,7 @@ let contents = try String(contentsOfFile: filename)
 //print(result.components(separatedBy: ",")[0])
 
 //Day Two part 2
+// This reverses the puzzle a little - need to find the noun and verb that yield a particular result in the first array element.
 let target = 19690720
 outerloop: for noun in 0 ... 99 {
     for verb in 0 ... 99 {
