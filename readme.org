@@ -6,9 +6,23 @@ exploring and understanding).
 
 * Usage
 
-Build scheme options have to be updated in Xcode to spoecify correct input
-file per puzzle (assuming building and running within Xcode).  Input files are
-user-specific, so if you're not me, the ones in this repo won't work for you.
+~main.swift~ is configured to run the code for both day one and day two.  Can
+run a single day by commenting out the unnecessary ones.
+
+* Input data files
+
+Input files are user-specific, so if you're not me, you'll need to update the
+inputs in the ~Inputs~ directory.
+
+There should be one file per day.  They can either be replaced in situ, or the
+Xcode build settings can be tweaked to specify alternative files.
+
+* Sample output
+
+#+BEGIN_EXAMPLE
+Day one:  5194970
+Day two:  Part 1: 11590668 Part2 : 2254
+#+END_EXAMPLE
 
 * Swift resources
 
