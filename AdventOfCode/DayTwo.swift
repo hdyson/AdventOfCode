@@ -105,7 +105,6 @@ func part2(contents:String) -> Int {
 
 func daytwo(contents:String) -> String {
     var result : String
-    result = part1(contents: contents)
-    result += String(part2(contents: contents))
+    result = "Part 1: " + part1(contents: contents) + " Part2 : " + String(part2(contents: contents))
     return result
 }

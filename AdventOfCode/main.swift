@@ -15,8 +15,12 @@ if CommandLine.arguments.count < 3 {
 }
 let filenames = CommandLine.arguments
 // filenames[0] is executable name
-let dayone_contents = try String(contentsOfFile: filenames[1])
-let daytwo_contents = try String(contentsOfFile: filenames[2])
-
-print(dayone(contents: dayone_contents))
-print(daytwo(contents: daytwo_contents))
+var source_data = [Int: String]()
+for (index, filename) in filenames.enumerated() {
+    if index == 0 {
+        continue
+    }
+    source_data[index] = try String(contentsOfFile: filename)
+}
+print("Day one: ", dayone(contents: source_data[1]!))
+print("Day two: ", daytwo(contents: source_data[2]!))
