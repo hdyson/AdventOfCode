@@ -9,14 +9,14 @@
 import Foundation
 
 
-if CommandLine.arguments.count < 3 {
-    print("Needs to be called with an argument for each day (currently, 2 arguments)")
+if CommandLine.arguments.count < 4 {
+    print("Needs to be called with an argument for each day (currently, 3 arguments)")
     exit(1)
 }
 let filenames = CommandLine.arguments
-// filenames[0] is executable name
 var source_data = [Int: String]()
 for (index, filename) in filenames.enumerated() {
+    // filenames[0] is executable name
     if index == 0 {
         continue
     }
@@ -24,3 +24,4 @@ for (index, filename) in filenames.enumerated() {
 }
 print("Day one: ", dayone(contents: source_data[1]!))
 print("Day two: ", daytwo(contents: source_data[2]!))
+print("Day three: ", daythree(contents: source_data[3]!))
