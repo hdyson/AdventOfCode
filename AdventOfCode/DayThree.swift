@@ -35,8 +35,11 @@ class DayThree{
             }
             current_point = Point(x: 0, y: 0)
             // split line on , to get each instruction
-            let instructions = input_line.components(separatedBy: ",")
+            let instructions = input_line.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ",")
             for var instruction in instructions{
+                if instruction == "" {
+                    continue
+                }
                 let direction = instruction[instruction.startIndex]
                 instruction.remove(at: instruction.startIndex)
                 let magnitude = Int(instruction)!
@@ -59,13 +62,21 @@ class DayThree{
         }
     }
     
+    func manhattan_distance (input: Point) -> Int {
+        return abs(input.y) + abs(input.x)
+    }
+    
     func solve(script:String) -> Int {
-        return 0
+        try! parse(input: script)
+        let crossings = line[0].intersection(line[1])
+        let distances = crossings.map( {manhattan_distance(input: $0)} )
+        return distances.min()!
     }
     
 }
 
-func daythree(contents:String) -> String {
-    return contents
+func daythree(contents:String) -> Int {
+    let solver = DayThree()
+    return solver.solve(script: contents)
 }
 
