@@ -91,8 +91,10 @@ class DayThree{
     
     func get_crossings_with_summed_indices() -> [Point] {
         var result = [Point]()
-        for point1 in line[0]{
-            for point2 in line[1]{
+        let noncrossings = line[0].symmetricDifference(line[1])
+
+        for point1 in line[0].subtracting(noncrossings){
+            for point2 in line[1].subtracting(noncrossings){
                 if point1 == point2{
                     result.append(Point(x: point1.x, y:point1.y, index: point1.index + point2.index))
                 }
