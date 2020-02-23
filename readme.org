@@ -30,3 +30,9 @@ Day two:  Part 1: 11590668 Part2 : 2254
 2. [[https://docs.swift.org/swift-book/][The swift book]]
 3. [[https://nshipster.com/swift-documentation/][Semi-official guide to docstrings in swift]]
 
+** Specific references
+
+** Day 4:
+
+1. Using an extension to split an int into an array of digits: [[https://www.hackingwithswift.com/example-code/language/how-to-split-an-integer-into-an-array-of-its-digits][from Hacking with Swift]]
+

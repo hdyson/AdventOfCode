@@ -25,3 +25,4 @@ for (index, filename) in filenames.enumerated() {
 print("Day one: ", dayone(contents: source_data[1]!))
 print("Day two: ", daytwo(contents: source_data[2]!))
 print("Day three: ", daythree(contents: source_data[3]!))
+print("Day four: ", dayfour(min: 136760, max: 595730))

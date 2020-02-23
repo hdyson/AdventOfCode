@@ -10,7 +10,6 @@ import XCTest
 
 @testable import AdventOfCode
 
-
 class TestDayOne: XCTestCase {
 
     var rocket = DayOneRocket(masses: "")

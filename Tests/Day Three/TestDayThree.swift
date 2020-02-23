@@ -6,8 +6,6 @@
 //  Copyright © 2020 Harold Dyson. All rights reserved.
 //
 
-import Foundation
-
 import XCTest
 
 @testable import AdventOfCode

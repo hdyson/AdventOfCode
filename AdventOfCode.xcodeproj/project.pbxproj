@@ -14,6 +14,9 @@
 		F46C6EEF23F9684D0003DC2D /* DayOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46C6EED23F960A60003DC2D /* DayOne.swift */; };
 		F46C6EF123F96CDE0003DC2D /* DayTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46C6EF023F96CDE0003DC2D /* DayTwo.swift */; };
 		F46C6EF223F96ED80003DC2D /* DayTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46C6EF023F96CDE0003DC2D /* DayTwo.swift */; };
+		F4745B9E240306AC00A76573 /* TestDayFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4745B9D240306AC00A76573 /* TestDayFour.swift */; };
+		F4745BA02403087900A76573 /* DayFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4745B9F2403087900A76573 /* DayFour.swift */; };
+		F4745BA12403087900A76573 /* DayFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4745B9F2403087900A76573 /* DayFour.swift */; };
 		F4DBA5D823F4A06400438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
 		F4DBA5E623F4A23800438201 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5E523F4A23800438201 /* Tests.swift */; };
 		F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
@@ -37,6 +40,8 @@
 		F44DC58B23F9EE26008C99A3 /* DayThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayThree.swift; sourceTree = "<group>"; };
 		F46C6EED23F960A60003DC2D /* DayOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOne.swift; sourceTree = "<group>"; };
 		F46C6EF023F96CDE0003DC2D /* DayTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTwo.swift; sourceTree = "<group>"; };
+		F4745B9D240306AC00A76573 /* TestDayFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDayFour.swift; sourceTree = "<group>"; };
+		F4745B9F2403087900A76573 /* DayFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFour.swift; sourceTree = "<group>"; };
 		F4DBA5D423F4A06400438201 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DBA5D723F4A06400438201 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F4DBA5E323F4A23800438201 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +78,14 @@
 			path = "Day Three";
 			sourceTree = "<group>";
 		};
+		F4745B9C2403066C00A76573 /* Day Four */ = {
+			isa = PBXGroup;
+			children = (
+				F4745B9D240306AC00A76573 /* TestDayFour.swift */,
+			);
+			path = "Day Four";
+			sourceTree = "<group>";
+		};
 		F4DBA5CB23F4A06400438201 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +112,7 @@
 				F46C6EED23F960A60003DC2D /* DayOne.swift */,
 				F46C6EF023F96CDE0003DC2D /* DayTwo.swift */,
 				F44DC58B23F9EE26008C99A3 /* DayThree.swift */,
+				F4745B9F2403087900A76573 /* DayFour.swift */,
 			);
 			path = AdventOfCode;
 			sourceTree = "<group>";
@@ -106,6 +120,7 @@
 		F4DBA5E423F4A23800438201 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F4745B9C2403066C00A76573 /* Day Four */,
 				F44DC58823F9C9C0008C99A3 /* Day Three */,
 				F4F9733523F743410092D992 /* DayTwo */,
 				F4F9733323F736E40092D992 /* DayOne */,
@@ -228,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4745BA02403087900A76573 /* DayFour.swift in Sources */,
 				F4DBA5D823F4A06400438201 /* main.swift in Sources */,
 				F46C6EF123F96CDE0003DC2D /* DayTwo.swift in Sources */,
 				F46C6EEE23F960A60003DC2D /* DayOne.swift in Sources */,
@@ -242,9 +258,11 @@
 				F46C6EF223F96ED80003DC2D /* DayTwo.swift in Sources */,
 				F44DC58A23F9C9FD008C99A3 /* TestDayThree.swift in Sources */,
 				F436331A23FC9733005C2490 /* DayThree.swift in Sources */,
+				F4745BA12403087900A76573 /* DayFour.swift in Sources */,
 				F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */,
 				F4DBA5E623F4A23800438201 /* Tests.swift in Sources */,
 				F4F9733923F743B00092D992 /* TestDayTwo.swift in Sources */,
+				F4745B9E240306AC00A76573 /* TestDayFour.swift in Sources */,
 				F46C6EEF23F9684D0003DC2D /* DayOne.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
