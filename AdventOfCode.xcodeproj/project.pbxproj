@@ -42,6 +42,7 @@
 		F46C6EF023F96CDE0003DC2D /* DayTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTwo.swift; sourceTree = "<group>"; };
 		F4745B9D240306AC00A76573 /* TestDayFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDayFour.swift; sourceTree = "<group>"; };
 		F4745B9F2403087900A76573 /* DayFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFour.swift; sourceTree = "<group>"; };
+		F4D95D48240865F7006BA22A /* input_day3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_day3.txt; sourceTree = "<group>"; };
 		F4DBA5D423F4A06400438201 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DBA5D723F4A06400438201 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F4DBA5E323F4A23800438201 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +151,7 @@
 			children = (
 				F4F9733C23F744130092D992 /* input_day2.txt */,
 				F4F9733B23F744020092D992 /* input_day1.txt */,
+				F4D95D48240865F7006BA22A /* input_day3.txt */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";

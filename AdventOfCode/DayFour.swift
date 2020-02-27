@@ -14,7 +14,7 @@ extension BinaryInteger {
     }
 }
 
-class DayFour{
+class DayFourPart1{
     
     let min : Int
     let max : Int
@@ -61,7 +61,31 @@ class DayFour{
     }
 }
 
+class DayFourPart2: DayFourPart1 {
+    // Part 2 means that doubles shouldn't count if part of a sequence of 3 identical digits.
+    override func check_double(input: Int) -> Bool{
+        var result = false
+        for (index, digit) in input.digits.enumerated().dropFirst() {
+            // Is this the second digit of a double?
+            if digit == input.digits[index-1]{
+                // If this is not second digit, check it's not third digit of a triple:
+                if index != 1 && digit == input.digits[index-2]{
+                    continue
+                }
+                // If this is not penultimate digit, check it's not second digit of a triple:
+                if index != input.digits.count - 1 && digit == input.digits[index+1]{
+                    continue
+                }
+                result = true
+                break
+            }
+        }
+        return result
+    }
+}
+
 func dayfour(min: Int, max: Int) -> String {
-    let dayfour = DayFour(min: min, max: max)
-    return dayfour.solve()
+    let part1 = DayFourPart1(min: min, max: max)
+    let part2 = DayFourPart2(min: min, max: max)
+    return "Part 1: " + part1.solve() + " Part 2: " + part2.solve()
 }
