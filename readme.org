@@ -26,13 +26,19 @@ Day two:  Part 1: 11590668 Part2 : 2254
 
 * Swift resources
 
+** General
+
 1. [[https://swift.org/getting-started/][Swift getting started guide]]
 2. [[https://docs.swift.org/swift-book/][The swift book]]
 3. [[https://nshipster.com/swift-documentation/][Semi-official guide to docstrings in swift]]
 
-** Specific references
+** Swift linter in XCode:
 
-** Day 4:
+1. [[https://github.com/realm/SwiftLint#xcode][SwiftLint]]
 
-1. Using an extension to split an int into an array of digits: [[https://www.hackingwithswift.com/example-code/language/how-to-split-an-integer-into-an-array-of-its-digits][from Hacking with Swift]]
+** References for particular days:
+
+*** Day 4:
+
+ 1. Using an extension to split an int into an array of digits: [[https://www.hackingwithswift.com/example-code/language/how-to-split-an-integer-into-an-array-of-its-digits][from Hacking with Swift]]
 
