@@ -18,41 +18,41 @@ class TestDayThree: XCTestCase {
 
     func testPart1Example1() {
         let expected = 6
-        let actual = daythree.minimum_distance(script: "R8,U5,L5,D3\nU7,R6,D4,L4")
+        let actual = try! daythree.minimum_distance(script: "R8,U5,L5,D3\nU7,R6,D4,L4")
         XCTAssertEqual(actual, expected)
     }
 
     func testPart1Example2() {
         let expected = 159
         let input = "R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83"
-        let actual = daythree.minimum_distance(script: input)
+        let actual = try! daythree.minimum_distance(script: input)
         XCTAssertEqual(actual, expected)
     }
 
     func testPart1Example3() {
         let expected = 135
         let input = "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7"
-        let actual = daythree.minimum_distance(script: input)
+        let actual = try! daythree.minimum_distance(script: input)
         XCTAssertEqual(actual, expected)
     }
 
     func testPart2Example1() {
         let expected = 30
-        let actual = daythree.minimum_steps(script: "R8,U5,L5,D3\nU7,R6,D4,L4")
+        let actual = try! daythree.minimum_steps(script: "R8,U5,L5,D3\nU7,R6,D4,L4")
         XCTAssertEqual(actual, expected)
     }
 
     func testPart2Example2() {
         let expected = 610
-        let input ="R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83"
-        let actual = daythree.minimum_steps(script: input)
+        let input = "R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83"
+        let actual = try! daythree.minimum_steps(script: input)
         XCTAssertEqual(actual, expected)
     }
 
     func testPart2Example3() {
         let expected = 410
         let input = "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7"
-        let actual = daythree.minimum_steps(script: input)
+        let actual = try! daythree.minimum_steps(script: input)
         XCTAssertEqual(actual, expected)
     }
 

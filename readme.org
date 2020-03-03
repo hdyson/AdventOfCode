@@ -42,3 +42,12 @@ Day two:  Part 1: 11590668 Part2 : 2254
 
  1. Using an extension to split an int into an array of digits: [[https://www.hackingwithswift.com/example-code/language/how-to-split-an-integer-into-an-array-of-its-digits][from Hacking with Swift]]
 
+
+* Notes for a day
+
+** TODO [0/3] Day 5:
+
+*** TODO Handle input
+*** TODO Opcode 3: copies input to address (both increment instruction pointer by 2 not 4)
+*** TODO Opcode 4: outputs value at address  (both increment instruction pointer by 2 not 4)
+
