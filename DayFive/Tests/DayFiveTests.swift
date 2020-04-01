@@ -15,7 +15,23 @@ class TestDayFive: XCTestCase {
     var dayfive = DayFiveParser()
 
     func testPart1Example1() {
-        XCTFail()
+        XCTFail("Test pending")
+    }
+    
+    func testGetOpcode1() {
+        let expected = 1
+        
+        let actual = dayfive.getOpcode(instruction: 1)
+        
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testGetOpcode201() {
+        let expected = 1
+        
+        let actual = dayfive.getOpcode(instruction: 201)
+        
+        XCTAssertEqual(actual, expected)
     }
 }
 

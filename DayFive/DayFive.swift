@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class DayFiveParser {
     let separator=","
     var instructionPointer = 0
@@ -33,7 +32,7 @@ class DayFiveParser {
             elements[2] = verb!
         }
         mainloop: repeat {
-            let opcode = elements[instructionPointer]
+            let opcode = getOpcode(instruction: elements[instructionPointer])
             switch opcode {
             case 1:
                 elements[elements[instructionPointer + 3]] = elements[elements[instructionPointer + 1]]
@@ -50,5 +49,17 @@ class DayFiveParser {
         } while true
         let resultStrings = elements.map {String($0)}
         return resultStrings.joined(separator: separator)
+    }
+    
+    internal func getOpcode(instruction : Int) -> Int {
+        let digits = instruction.digits
+        let units = digits[digits.count - 1]
+        var result = units
+        if (digits.count > 1) {
+            let tens = digits[digits.count - 2]
+            result = 10 * tens + units
+        }
+        return result
+            
     }
 }
