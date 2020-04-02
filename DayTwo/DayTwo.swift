@@ -22,7 +22,6 @@ See https://adventofcode.com/2019/day/2 for the details of the puzzle being solv
  */
 class DayTwoParser {
     let separator=","
-    var instructionPointer = 0
 
     let noun: Int?
     let verb: Int?
@@ -59,6 +58,16 @@ Basic initialiser
         if verb != nil {
             elements[2] = verb!
         }
+        elements = try execute(input: elements)
+
+        let resultStrings = elements.map {String($0)}
+        return resultStrings.joined(separator: separator)
+    }
+
+    func execute(input: [Int]) throws -> [Int] {
+        var instructionPointer = 0
+        var elements = input
+
         mainloop: repeat {
             let opcode = elements[instructionPointer]
             switch opcode {
@@ -75,8 +84,11 @@ Basic initialiser
             }
             instructionPointer += 4
         } while true
-        let resultStrings = elements.map {String($0)}
-        return resultStrings.joined(separator: separator)
+        return elements
+    }
+
+    func getOpcode(instruction: Int) -> Int {
+        return instruction
     }
 }
 

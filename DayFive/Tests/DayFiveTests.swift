@@ -17,20 +17,29 @@ class TestDayFive: XCTestCase {
     func testPart1Example1() {
         XCTFail("Test pending")
     }
-    
+
     func testGetOpcode1() {
         let expected = 1
-        
+
         let actual = dayfive.getOpcode(instruction: 1)
-        
+
         XCTAssertEqual(actual, expected)
     }
 
     func testGetOpcode201() {
         let expected = 1
-        
+
         let actual = dayfive.getOpcode(instruction: 201)
-        
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testGetOpcode1002() {
+        // Example from text
+        let expected = 2
+
+        let actual = dayfive.getOpcode(instruction: 1002)
+
         XCTAssertEqual(actual, expected)
     }
 }
