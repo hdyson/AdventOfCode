@@ -6,6 +6,8 @@
 //  Copyright © 2020 Harold Dyson. All rights reserved.
 //
 
+// swiftlint:disable force_try
+
 import XCTest
 
 @testable import AdventOfCode
@@ -42,6 +44,16 @@ class TestDayFive: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
+    func test_example_1() {
+        let expected = 999
+
+        dayfive.input = 999
+        try! _ = dayfive.parse(script: "3,0,4,0,99")
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
 }
 
 // Check we haven't broken day two functionality in day five changes
@@ -50,7 +62,7 @@ class TestDayTwoStillWorks: XCTestCase {
     var daytwo = DayFiveParser()
 
     func testOpcode() {
-        XCTAssertThrowsError(try daytwo.parse(script: "3,0,0,0"))
+        XCTAssertThrowsError(try daytwo.parse(script: "5,0,0,0"))
     }
 
     func testExample1() {

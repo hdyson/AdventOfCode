@@ -58,15 +58,15 @@ Basic initialiser
         if verb != nil {
             elements[2] = verb!
         }
-        elements = try execute(input: elements)
+        elements = try execute(programme: elements)
 
         let resultStrings = elements.map {String($0)}
         return resultStrings.joined(separator: separator)
     }
 
-    func execute(input: [Int]) throws -> [Int] {
+    func execute(programme: [Int]) throws -> [Int] {
         var instructionPointer = 0
-        var elements = input
+        var elements = programme
 
         mainloop: repeat {
             let opcode = elements[instructionPointer]
