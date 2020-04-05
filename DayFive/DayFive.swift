@@ -12,6 +12,7 @@ class DayFiveParser: DayTwoParser {
 
     var input: Int?
     var output: Int?
+    var result = [Int]()
 
     override func execute(programme: [Int]) throws -> [Int] {
         var instructionPointer = 0
@@ -23,28 +24,30 @@ class DayFiveParser: DayTwoParser {
             case 1:
                 elements[elements[instructionPointer + 3]] = elements[elements[instructionPointer + 1]]
                     + elements[elements[instructionPointer + 2]]
+                instructionPointer += 4
             case 2:
                 elements[elements[instructionPointer + 3]] = elements[elements[instructionPointer + 1]]
                     * elements[elements[instructionPointer + 2]]
+                instructionPointer += 4
             case 3:
                 elements[elements[instructionPointer + 1]] = input!
+                instructionPointer += 2
             case 4:
                 output = elements[elements[instructionPointer + 1]]
+                instructionPointer += 2
             case 99:
                 break mainloop
             default:
                 throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
             }
-            switch opcode {
-            case 1, 2:
-                instructionPointer += 4
-            case 3, 4:
-                instructionPointer += 2
-            default:
-                throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
-            }
         } while true
-        return elements
+        if output != nil {
+            result = [output!]
+        } else{
+            // preserve day 2 behaviour
+            result = elements
+        }
+        return result
     }
 
     override func getOpcode(instruction: Int) -> Int {
@@ -56,5 +59,17 @@ class DayFiveParser: DayTwoParser {
             result = 10 * tens + units
         }
         return result
+    }
+
+    func getModes(instruction: Int) -> [Int] {
+        var modes: [Int]
+        if instruction.digits.count > 2 {
+            modes = instruction.digits
+            modes.removeLast()
+            modes.removeLast()
+        } else {
+            modes = []
+        }
+        return modes
     }
 }

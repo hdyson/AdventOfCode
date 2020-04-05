@@ -20,6 +20,21 @@ class TestDayFive: XCTestCase {
         XCTFail("Test pending")
     }
 
+    func test_example_1() {
+        let expected = 999
+
+        dayfive.input = 999
+        try! _ = dayfive.parse(script: "3,0,4,0,99")
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+}
+
+class TestGetOpCode: XCTestCase {
+
+    var dayfive = DayFiveParser()
+
     func testGetOpcode1() {
         let expected = 1
 
@@ -37,20 +52,30 @@ class TestDayFive: XCTestCase {
     }
 
     func testGetOpcode1002() {
-        // Example from text
         let expected = 2
 
         let actual = dayfive.getOpcode(instruction: 1002)
 
         XCTAssertEqual(actual, expected)
     }
+}
 
-    func test_example_1() {
-        let expected = 999
+class TestGetModes: XCTestCase {
 
-        dayfive.input = 999
-        try! _ = dayfive.parse(script: "3,0,4,0,99")
-        let actual = dayfive.output
+    var dayfive = DayFiveParser()
+
+    func testGetModesMissing() {
+        let expected = [Int]()
+
+        let actual = dayfive.getModes(instruction: 1)
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testGetModes1002() {
+        let expected = [1, 0]
+
+        let actual = dayfive.getModes(instruction: 1002)
 
         XCTAssertEqual(actual, expected)
     }
