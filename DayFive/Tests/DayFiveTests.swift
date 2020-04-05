@@ -16,10 +16,6 @@ class TestDayFive: XCTestCase {
 
     var dayfive = DayFiveParser()
 
-    func testPart1Example1() {
-        XCTFail("Test pending")
-    }
-
     func test_example_1() {
         let expected = 999
 
@@ -27,6 +23,15 @@ class TestDayFive: XCTestCase {
         try! _ = dayfive.parse(script: "3,0,4,0,99")
         let actual = dayfive.output
 
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func test_example_2() {
+        let expected = "1002,4,3,4,99"
+        
+        dayfive.input = 1
+        let actual = try! dayfive.parse(script: "1002,4,3,4,33")
+        
         XCTAssertEqual(actual, expected)
     }
 }

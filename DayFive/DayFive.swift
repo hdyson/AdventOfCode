@@ -19,15 +19,15 @@ class DayFiveParser: DayTwoParser {
         var elements = programme
 
         mainloop: repeat {
-            let opcode = elements[instructionPointer]
+            let opcode = getOpcode(instruction: elements[instructionPointer])
             switch opcode {
             case 1:
-                elements[elements[instructionPointer + 3]] = elements[elements[instructionPointer + 1]]
-                    + elements[elements[instructionPointer + 2]]
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
                 instructionPointer += 4
             case 2:
-                elements[elements[instructionPointer + 3]] = elements[elements[instructionPointer + 1]]
-                    * elements[elements[instructionPointer + 2]]
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
                 instructionPointer += 4
             case 3:
                 elements[elements[instructionPointer + 1]] = input!
@@ -71,5 +71,37 @@ class DayFiveParser: DayTwoParser {
             modes = []
         }
         return modes
+    }
+    
+    func getOperands(pointer instructionPointer: Int, elements: [Int]) -> (firstOperand: Int, secondOperand: Int){
+        let parameterModes = getModes(instruction: elements[instructionPointer])
+        var firstOperand = elements[elements[instructionPointer + 1]]
+        var secondOperand = elements[elements[instructionPointer + 2]]
+        if parameterModes.count == 1 {
+            // Output parameter is always position mode
+            firstOperand = elements[elements[instructionPointer + 1]]
+            secondOperand = elements[elements[instructionPointer + 2]]
+        }
+        else if parameterModes.count == 2 {
+            firstOperand = elements[elements[instructionPointer + 1]]
+            if parameterModes[0] == 0 {
+                secondOperand = elements[elements[instructionPointer + 2]]
+            } else {
+                secondOperand = elements[instructionPointer + 2]
+            }
+        }
+        else if parameterModes.count == 3 {
+            if parameterModes[0] == 0 {
+                firstOperand = elements[elements[instructionPointer + 1]]
+            } else {
+                firstOperand = elements[instructionPointer + 1]
+            }
+            if parameterModes[1] == 0 {
+                secondOperand = elements[elements[instructionPointer + 2]]
+            } else {
+                secondOperand = elements[instructionPointer + 2]
+            }
+        }
+        return(firstOperand, secondOperand)
     }
 }
