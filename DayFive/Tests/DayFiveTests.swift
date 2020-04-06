@@ -25,13 +25,13 @@ class TestDayFive: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
-    
+
     func test_example_2() {
         let expected = "1002,4,3,4,99"
-        
+
         dayfive.input = 1
         let actual = try! dayfive.parse(script: "1002,4,3,4,33")
-        
+
         XCTAssertEqual(actual, expected)
     }
 }

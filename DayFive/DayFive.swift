@@ -43,7 +43,7 @@ class DayFiveParser: DayTwoParser {
         } while true
         if output != nil {
             result = [output!]
-        } else{
+        } else {
             // preserve day 2 behaviour
             result = elements
         }
@@ -72,31 +72,28 @@ class DayFiveParser: DayTwoParser {
         }
         return modes
     }
-    
-    func getOperands(pointer instructionPointer: Int, elements: [Int]) -> (firstOperand: Int, secondOperand: Int){
+
+    func getOperands(pointer instructionPointer: Int, elements: [Int]) -> (firstOperand: Int, secondOperand: Int) {
         let parameterModes = getModes(instruction: elements[instructionPointer])
-        var firstOperand = elements[elements[instructionPointer + 1]]
-        var secondOperand = elements[elements[instructionPointer + 2]]
-        if parameterModes.count == 1 {
-            // Output parameter is always position mode
+        var firstOperand = 0
+        var secondOperand = 0
+        if parameterModes.count == 0 {
             firstOperand = elements[elements[instructionPointer + 1]]
             secondOperand = elements[elements[instructionPointer + 2]]
-        }
-        else if parameterModes.count == 2 {
-            firstOperand = elements[elements[instructionPointer + 1]]
-            if parameterModes[0] == 0 {
-                secondOperand = elements[elements[instructionPointer + 2]]
-            } else {
-                secondOperand = elements[instructionPointer + 2]
-            }
-        }
-        else if parameterModes.count == 3 {
+        } else if parameterModes.count == 1 {
             if parameterModes[0] == 0 {
                 firstOperand = elements[elements[instructionPointer + 1]]
             } else {
                 firstOperand = elements[instructionPointer + 1]
             }
+            secondOperand = elements[elements[instructionPointer + 2]]
+        } else if parameterModes.count >= 2 {
             if parameterModes[1] == 0 {
+                firstOperand = elements[elements[instructionPointer + 1]]
+            } else {
+                firstOperand = elements[instructionPointer + 1]
+            }
+            if parameterModes[0] == 0 {
                 secondOperand = elements[elements[instructionPointer + 2]]
             } else {
                 secondOperand = elements[instructionPointer + 2]
@@ -104,4 +101,12 @@ class DayFiveParser: DayTwoParser {
         }
         return(firstOperand, secondOperand)
     }
+}
+
+func dayfive(input: Int, contents: String) throws -> String {
+    let part1 = DayFiveParser()
+    part1.input = input
+    _ = try part1.parse(script: contents)
+    let result = part1.output!
+    return "Part 1: \(result)"
 }
