@@ -12,78 +12,118 @@ class DayFiveParser: DayTwoParser {
 
     var input: Int?
     var output: Int?
-    var result = [Int]()
 
+    // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
+    // complexity further though.
+    // swiftlint:disable cyclomatic_complexity
     override func execute(programme: [Int]) throws -> [Int] {
-        var instructionPointer = 0
-        var elements = programme
+        instructionPointer = 0
+        elements = programme
 
         mainloop: repeat {
-            let opcode = getOpcode(instruction: elements[instructionPointer])
+            let opcode = getOpcode()
             switch opcode {
             case 1:
-                // Addition
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
-                instructionPointer += 4
+                addition()
             case 2:
-                // Multiplication
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
-                instructionPointer += 4
+                multiplication()
             case 3:
-                // Read input
-                elements[elements[instructionPointer + 1]] = input!
-                instructionPointer += 2
+                readInput()
             case 4:
-                // Set output
-                let modes = getModes(instruction: elements[instructionPointer])
-                if modes.count > 0 && modes[0] == 1 {
-                    output = elements[instructionPointer + 1]
-                } else {
-                    output = elements[elements[instructionPointer + 1]]
-                }
-                instructionPointer += 2
+                setOutput()
             case 5:
-                // Jump if true
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                if operands.firstOperand != 0 {
-                    instructionPointer = operands.secondOperand
-                } else {
-                    instructionPointer += 3
-                }
+                jumpIfTrue()
             case 6:
-                // Jump if false
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                if operands.firstOperand == 0 {
-                    instructionPointer = operands.secondOperand
-                } else {
-                    instructionPointer += 3
-                }
+                jumpIfFalse()
             case 7:
-                // less than
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                if operands.firstOperand < operands.secondOperand {
-                    elements[elements[instructionPointer + 3]] = 1
-                } else {
-                    elements[elements[instructionPointer + 3]] = 0
-                }
-                instructionPointer += 4
+                lessThan()
             case 8:
-                // equals
-                let operands = getOperands(pointer: instructionPointer, elements: elements)
-                if operands.firstOperand == operands.secondOperand {
-                    elements[elements[instructionPointer + 3]] = 1
-                } else {
-                    elements[elements[instructionPointer + 3]] = 0
-                }
-                instructionPointer += 4
+                equals()
             case 99:
                 break mainloop
             default:
                 throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
             }
         } while true
+
+        let result = getResult()
+
+        return result
+    }
+    // swiftlint:enable cyclomatic_complexity
+
+    func addition() {
+        let operands = getOperands(pointer: instructionPointer)
+        elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
+        instructionPointer += 4
+    }
+
+    func multiplication() {
+        let operands = getOperands(pointer: instructionPointer)
+        elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
+        instructionPointer += 4
+    }
+
+    func readInput() {
+        elements[elements[instructionPointer + 1]] = input!
+        instructionPointer += 2
+    }
+
+    func setOutput() {
+        let modes = getModes()
+        if modes.count > 0 && modes[0] == 1 {
+            output = elements[instructionPointer + 1]
+        } else {
+            output = elements[elements[instructionPointer + 1]]
+        }
+        instructionPointer += 2
+    }
+
+    func jumpIfTrue() {
+        let operands = getOperands(pointer: instructionPointer)
+        if operands.firstOperand != 0 {
+            instructionPointer = operands.secondOperand
+        } else {
+            instructionPointer += 3
+        }
+    }
+
+    func jumpIfFalse() {
+        let operands = getOperands(pointer: instructionPointer)
+        if operands.firstOperand == 0 {
+            instructionPointer = operands.secondOperand
+        } else {
+            instructionPointer += 3
+        }
+    }
+
+    func equals() {
+        // equals
+        let operands = getOperands(pointer: instructionPointer)
+        if operands.firstOperand == operands.secondOperand {
+            elements[elements[instructionPointer + 3]] = 1
+        } else {
+            elements[elements[instructionPointer + 3]] = 0
+        }
+        instructionPointer += 4
+    }
+
+    func getInstruction() -> Int {
+        return elements[instructionPointer]
+    }
+
+    func lessThan() {
+        let operands = getOperands(pointer: instructionPointer)
+        if operands.firstOperand < operands.secondOperand {
+            elements[elements[instructionPointer + 3]] = 1
+        } else {
+            elements[elements[instructionPointer + 3]] = 0
+        }
+        instructionPointer += 4
+    }
+
+    func getResult() -> [Int] {
+        var result = [Int]()
         if output != nil {
             result = [output!]
         } else {
@@ -93,7 +133,8 @@ class DayFiveParser: DayTwoParser {
         return result
     }
 
-    override func getOpcode(instruction: Int) -> Int {
+    override func getOpcode() -> Int {
+        let instruction = getInstruction()
         let digits = instruction.digits
         let units = digits[digits.count - 1]
         var result = units
@@ -104,7 +145,8 @@ class DayFiveParser: DayTwoParser {
         return result
     }
 
-    func getModes(instruction: Int) -> [Int] {
+    func getModes() -> [Int] {
+        let instruction = getInstruction()
         var modes: [Int]
         if instruction.digits.count > 2 {
             modes = instruction.digits
@@ -116,8 +158,8 @@ class DayFiveParser: DayTwoParser {
         return modes
     }
 
-    func getOperands(pointer instructionPointer: Int, elements: [Int]) -> (firstOperand: Int, secondOperand: Int) {
-        let parameterModes = getModes(instruction: elements[instructionPointer])
+    func getOperands(pointer instructionPointer: Int) -> (firstOperand: Int, secondOperand: Int) {
+        let parameterModes = getModes()
         var firstOperand = 0
         var secondOperand = 0
         if parameterModes.count == 0 {

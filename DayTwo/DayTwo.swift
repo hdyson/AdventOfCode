@@ -25,6 +25,8 @@ class DayTwoParser {
 
     let noun: Int?
     let verb: Int?
+    var elements = [Int]()
+    var instructionPointer = 0
     /**
 Basic initialiser
  - Parameter noun: when parsing an instruction set, the first operand is replaced with this value.
@@ -49,7 +51,7 @@ Basic initialiser
      */
     func parse(script: String) throws -> String {
         let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
-        var elements = elementString.map {Int($0)!}
+        elements = elementString.map {Int($0)!}
 
         // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
         if noun != nil {
@@ -65,8 +67,8 @@ Basic initialiser
     }
 
     func execute(programme: [Int]) throws -> [Int] {
-        var instructionPointer = 0
-        var elements = programme
+        instructionPointer = 0
+        elements = programme
 
         mainloop: repeat {
             let opcode = elements[instructionPointer]
@@ -87,8 +89,8 @@ Basic initialiser
         return elements
     }
 
-    func getOpcode(instruction: Int) -> Int {
-        return instruction
+    func getOpcode() -> Int {
+        return elements[instructionPointer]
     }
 }
 

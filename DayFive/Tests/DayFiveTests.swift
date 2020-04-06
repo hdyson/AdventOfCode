@@ -104,14 +104,22 @@ class TestDayFivePartTwo: XCTestCase {
 
 }
 
+class DayFiveParserMock : DayFiveParser {
+    func setInstruction(instruction: Int) {
+        elements = [instruction]
+        instructionPointer = 0
+    }
+}
+
 class TestGetOpCode: XCTestCase {
 
-    var dayfive = DayFiveParser()
+    var dayfive = DayFiveParserMock()
 
     func testGetOpcode1() {
         let expected = 1
 
-        let actual = dayfive.getOpcode(instruction: 1)
+        dayfive.setInstruction(instruction: 1)
+        let actual = dayfive.getOpcode()
 
         XCTAssertEqual(actual, expected)
     }
@@ -119,7 +127,8 @@ class TestGetOpCode: XCTestCase {
     func testGetOpcode201() {
         let expected = 1
 
-        let actual = dayfive.getOpcode(instruction: 201)
+        dayfive.setInstruction(instruction: 201)
+        let actual = dayfive.getOpcode()
 
         XCTAssertEqual(actual, expected)
     }
@@ -127,7 +136,8 @@ class TestGetOpCode: XCTestCase {
     func testGetOpcode1002() {
         let expected = 2
 
-        let actual = dayfive.getOpcode(instruction: 1002)
+        dayfive.setInstruction(instruction: 1002)
+        let actual = dayfive.getOpcode()
 
         XCTAssertEqual(actual, expected)
     }
@@ -135,12 +145,13 @@ class TestGetOpCode: XCTestCase {
 
 class TestGetModes: XCTestCase {
 
-    var dayfive = DayFiveParser()
+    var dayfive = DayFiveParserMock()
 
     func testGetModesMissing() {
         let expected = [Int]()
 
-        let actual = dayfive.getModes(instruction: 1)
+        dayfive.setInstruction(instruction: 1)
+        let actual = dayfive.getModes()
 
         XCTAssertEqual(actual, expected)
     }
@@ -148,7 +159,8 @@ class TestGetModes: XCTestCase {
     func testGetModes1002() {
         let expected = [1, 0]
 
-        let actual = dayfive.getModes(instruction: 1002)
+        dayfive.setInstruction(instruction: 1002)
+        let actual = dayfive.getModes()
 
         XCTAssertEqual(actual, expected)
     }
