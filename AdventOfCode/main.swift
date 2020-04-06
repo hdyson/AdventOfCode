@@ -21,8 +21,8 @@ for (index, filename) in filenames.enumerated() {
     }
     sourceData[index] = try String(contentsOfFile: filename)
 }
-//print("Day one: ", dayone(contents: sourceData[1]!))
-//print("Day two: ", try daytwo(contents: sourceData[2]!))
-//print("Day three: ", try daythree(contents: sourceData[3]!))
-//print("Day four: ", dayfour(min: 136760, max: 595730))
-print("Day five: ", try dayfive(input: 1, contents: sourceData[5]!))
+print("Day one: ", dayone(contents: sourceData[1]!))
+print("Day two: ", try daytwo(contents: sourceData[2]!))
+print("Day three: ", try daythree(contents: sourceData[3]!))
+print("Day four: ", dayfour(min: 136760, max: 595730))
+print("Day five: ", try dayfive(partOneInput: 1, partTwoInput: 5, contents: sourceData[5]!))

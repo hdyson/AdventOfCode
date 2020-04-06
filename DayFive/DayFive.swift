@@ -22,19 +22,62 @@ class DayFiveParser: DayTwoParser {
             let opcode = getOpcode(instruction: elements[instructionPointer])
             switch opcode {
             case 1:
+                // Addition
                 let operands = getOperands(pointer: instructionPointer, elements: elements)
                 elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
                 instructionPointer += 4
             case 2:
+                // Multiplication
                 let operands = getOperands(pointer: instructionPointer, elements: elements)
                 elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
                 instructionPointer += 4
             case 3:
+                // Read input
                 elements[elements[instructionPointer + 1]] = input!
                 instructionPointer += 2
             case 4:
-                output = elements[elements[instructionPointer + 1]]
+                // Set output
+                let modes = getModes(instruction: elements[instructionPointer])
+                if modes.count > 0 && modes[0] == 1 {
+                    output = elements[instructionPointer + 1]
+                } else {
+                    output = elements[elements[instructionPointer + 1]]
+                }
                 instructionPointer += 2
+            case 5:
+                // Jump if true
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                if operands.firstOperand != 0 {
+                    instructionPointer = operands.secondOperand
+                } else {
+                    instructionPointer += 3
+                }
+            case 6:
+                // Jump if false
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                if operands.firstOperand == 0 {
+                    instructionPointer = operands.secondOperand
+                } else {
+                    instructionPointer += 3
+                }
+            case 7:
+                // less than
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                if operands.firstOperand < operands.secondOperand {
+                    elements[elements[instructionPointer + 3]] = 1
+                } else {
+                    elements[elements[instructionPointer + 3]] = 0
+                }
+                instructionPointer += 4
+            case 8:
+                // equals
+                let operands = getOperands(pointer: instructionPointer, elements: elements)
+                if operands.firstOperand == operands.secondOperand {
+                    elements[elements[instructionPointer + 3]] = 1
+                } else {
+                    elements[elements[instructionPointer + 3]] = 0
+                }
+                instructionPointer += 4
             case 99:
                 break mainloop
             default:
@@ -103,10 +146,12 @@ class DayFiveParser: DayTwoParser {
     }
 }
 
-func dayfive(input: Int, contents: String) throws -> String {
+func dayfive(partOneInput: Int, partTwoInput: Int, contents: String) throws -> String {
     let part1 = DayFiveParser()
-    part1.input = input
+    part1.input = partOneInput
     _ = try part1.parse(script: contents)
-    let result = part1.output!
-    return "Part 1: \(result)"
+    let part2 = DayFiveParser()
+    part2.input = partTwoInput
+    _ = try part2.parse(script: contents)
+    return "Part 1: \(part1.output!)  Part 2: \(part2.output!)"
 }

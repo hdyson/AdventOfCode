@@ -12,7 +12,7 @@ import XCTest
 
 @testable import AdventOfCode
 
-class TestDayFive: XCTestCase {
+class TestDayFivePartOne: XCTestCase {
 
     var dayfive = DayFiveParser()
 
@@ -34,6 +34,74 @@ class TestDayFive: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+}
+
+class TestDayFivePartTwo: XCTestCase {
+
+    var dayfive = DayFiveParser()
+
+    func test_example_1() {
+        let expected = 1
+
+        dayfive.input = 999
+        try! _ = dayfive.parse(script: "3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9")
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func test_example_2() {
+        let expected = 1
+
+        dayfive.input = 999
+        try! _ = dayfive.parse(script: "3,3,1105,-1,9,1101,0,0,12,4,12,99,1")
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func test_example_3_case_1() {
+        let expected = 999
+
+        dayfive.input = 0
+        try! _ = dayfive.parse(script: """
+3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
+1101,1000,1,20,4,20,1105,1,46,98,99
+"""
+        )
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func test_example_3_case_2() {
+        let expected = 1000
+
+        dayfive.input = 8
+        try! _ = dayfive.parse(script: """
+3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
+1101,1000,1,20,4,20,1105,1,46,98,99
+"""
+        )
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func test_example_3_case_3() {
+        let expected = 1001
+
+        dayfive.input = 9
+        try! _ = dayfive.parse(script: """
+3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
+1101,1000,1,20,4,20,1105,1,46,98,99
+"""
+        )
+        let actual = dayfive.output
+
+        XCTAssertEqual(actual, expected)
+    }
+
 }
 
 class TestGetOpCode: XCTestCase {
@@ -92,7 +160,7 @@ class TestDayTwoStillWorks: XCTestCase {
     var daytwo = DayFiveParser()
 
     func testOpcode() {
-        XCTAssertThrowsError(try daytwo.parse(script: "5,0,0,0"))
+        XCTAssertThrowsError(try daytwo.parse(script: "15,0,0,0"))
     }
 
     func testExample1() {
