@@ -15,3 +15,13 @@ class DaySixParser {
         input = input_string
     }
 }
+
+struct Orbit {
+    let satellite : String
+    let planet : String
+    
+    init(planet planet_arg: String, satellite satellite_arg: String) {
+        satellite = satellite_arg
+        planet = planet_arg
+    }
+}

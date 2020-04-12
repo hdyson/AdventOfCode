@@ -8,9 +8,9 @@
 
 import XCTest
 
-class DaySixTests: XCTestCase {
+class DaySixParserTests: XCTestCase {
 
-    var daysix = DaySixParser()
+    let daysix = DaySixParser()
     
     func testGetInput() {
         let test_string = "foo)bar"
@@ -22,12 +22,22 @@ class DaySixTests: XCTestCase {
         
         XCTAssertEqual(actual, expected)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testCreatesOrbits() {
+        XCTFail("Test pending")
     }
 
+}
+
+class OrbitTests: XCTestCase {
+
+    let orbit = Orbit(planet: "foo", satellite: "bar")
+
+    func testInitSetsSatellite() {
+        let expected = "bar"
+        
+        let actual = orbit.satellite
+        
+        XCTAssertEqual(actual, expected)
+    }
 }
