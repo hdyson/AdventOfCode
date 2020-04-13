@@ -52,11 +52,22 @@ class AstronomicalObjectTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
-    func testCountOrbits() {
-        let expected = 2
+    func testCountSingleOrbit() {
+        let expected = 1
 
         let actual = astronomicalObject.countOrbits()
 
         XCTAssertEqual(actual, expected)
+    }
+
+    func testCountMultipleOrbits() {
+        let expected = 3
+
+        let secondObject = AstronomicalObject(planet: astronomicalObject, satellite: "baz")
+        let thirdObject = AstronomicalObject(planet: secondObject, satellite: "end")
+        let actual = thirdObject.countOrbits()
+
+        XCTAssertEqual(actual, expected)
+
     }
 }

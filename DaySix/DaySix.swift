@@ -19,14 +19,23 @@ class DaySixParser {
 class AstronomicalObject: Hashable {
     let name: String
     let orbits: AstronomicalObject?
+    var totalOrbits: Int?
 
     init(planet: AstronomicalObject?, satellite: String) {
         name = satellite
         orbits = planet
+        totalOrbits = nil
     }
 
     func countOrbits() -> Int {
-        return 0
+        if totalOrbits == nil {
+            if orbits == nil {
+                totalOrbits = 0
+            } else {
+                totalOrbits = orbits!.countOrbits() + 1
+            }
+        }
+        return totalOrbits!
     }
 
     static func == (lhs: AstronomicalObject, rhs: AstronomicalObject) -> Bool {
