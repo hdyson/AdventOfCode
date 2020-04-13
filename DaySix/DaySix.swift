@@ -18,14 +18,18 @@ class DaySixParser {
         let orbitSeparator = ")"
         for line in input.components(separatedBy: lineSeparator) {
             let bodies = line.components(separatedBy: orbitSeparator)
-            let planet_name = bodies[0]
-            let planet = AstronomicalObject(planet: nil, satellite: planet_name)
+            let planetName = bodies[0]
+            let planet = AstronomicalObject(planet: nil, satellite: planetName)
             let satellite = bodies[1]
             astronomicalObjects.insert(AstronomicalObject(planet: planet, satellite: satellite))
             if !astronomicalObjects.contains(planet) {
-                astronomicalObjects.insert(AstronomicalObject(planet: nil, satellite: planet_name))
+                astronomicalObjects.insert(AstronomicalObject(planet: nil, satellite: planetName))
             }
         }
+    }
+
+    func countOrbits() -> Int {
+        return 0
     }
 }
 
@@ -60,4 +64,10 @@ class AstronomicalObject: Hashable {
         hasher.combine(name)
         hasher.combine(orbits)
     }
+}
+
+func daysix(contents: String) throws -> String {
+    let part1 = DaySixParser()
+    part1.parse(inputString: contents)
+    return "Part 1: \(part1.countOrbits())"
 }

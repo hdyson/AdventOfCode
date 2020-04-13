@@ -36,6 +36,29 @@ class DaySixParserTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    func testCountOrbits() {
+        let testString = """
+COM)B
+B)C
+C)D
+D)E
+E)F
+B)G
+G)H
+D)I
+E)J
+J)K
+K)L
+"""
+
+        let expected = 42
+
+        daysix.parse(inputString: testString)
+        let actual = daysix.countOrbits()
+
+        XCTAssertEqual(actual, expected)
+    }
+
 }
 
 class AstronomicalObjectTests: XCTestCase {
