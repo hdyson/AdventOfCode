@@ -24,7 +24,16 @@ class DaySixParserTests: XCTestCase {
     }
 
     func testCreatesAstronomicalObjects() {
-        XCTFail("Test pending")
+        let testString = "foo)bar"
+
+        let orbited = AstronomicalObject(planet: nil, satellite: "foo")
+        let satellite = AstronomicalObject(planet: orbited, satellite: "bar")
+        let expected = Set([orbited, satellite])
+
+        daysix.parse(inputString: testString)
+        let actual = daysix.astronomicalObjects
+
+        XCTAssertEqual(actual, expected)
     }
 
 }

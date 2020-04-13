@@ -10,6 +10,7 @@ import Foundation
 
 class DaySixParser {
     var input = ""
+    var astronomicalObjects = Set<AstronomicalObject>()
 
     func parse(inputString: String) {
         input = inputString
