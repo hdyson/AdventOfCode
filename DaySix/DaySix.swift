@@ -16,7 +16,7 @@ class DaySixParser {
         input = inputString
         let lineSeparator = "\n"
         let orbitSeparator = ")"
-        for line in input.components(separatedBy: lineSeparator) {
+        for line in input.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: lineSeparator) {
             let bodies = line.components(separatedBy: orbitSeparator)
             let planet = bodies[0]
             let satellite = bodies[1]
@@ -33,6 +33,11 @@ class DaySixParser {
                 total+=1
             }
         }
+        return total
+    }
+
+    func countTransfers() -> Int {
+        var total = 0
         return total
     }
 }
