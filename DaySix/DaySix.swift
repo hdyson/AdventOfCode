@@ -10,18 +10,32 @@ import Foundation
 
 class DaySixParser {
     var input = ""
-    
-    func parse(_ input_string: String) {
-        input = input_string
+
+    func parse(inputString: String) {
+        input = inputString
     }
 }
 
-struct Orbit {
-    let satellite : String
-    let planet : String
-    
-    init(planet planet_arg: String, satellite satellite_arg: String) {
-        satellite = satellite_arg
-        planet = planet_arg
+class AstronomicalObject: Hashable {
+    let name: String
+    let orbits: AstronomicalObject?
+
+    init(planet: AstronomicalObject?, satellite: String) {
+        name = satellite
+        orbits = planet
+    }
+
+    func countOrbits() -> Int {
+        return 0
+    }
+
+    static func == (lhs: AstronomicalObject, rhs: AstronomicalObject) -> Bool {
+        return lhs.name == rhs.name && lhs.orbits == rhs.orbits
+    }
+
+    func hash(into hasher: inout Hasher) {
+        // Need manual hasher for a class (can be auto for struct, but can't use a struct recursively)
+        hasher.combine(name)
+        hasher.combine(orbits)
     }
 }

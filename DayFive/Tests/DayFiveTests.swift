@@ -104,7 +104,7 @@ class TestDayFivePartTwo: XCTestCase {
 
 }
 
-class DayFiveParserMock : DayFiveParser {
+class DayFiveParserMock: DayFiveParser {
     func setInstruction(instruction: Int) {
         elements = [instruction]
         instructionPointer = 0

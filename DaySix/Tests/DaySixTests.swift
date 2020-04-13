@@ -11,33 +11,52 @@ import XCTest
 class DaySixParserTests: XCTestCase {
 
     let daysix = DaySixParser()
-    
-    func testGetInput() {
-        let test_string = "foo)bar"
 
-        let expected = test_string
-        
-        daysix.parse(test_string)
+    func testGetInput() {
+        let testString = "foo)bar"
+
+        let expected = testString
+
+        daysix.parse(inputString: testString)
         let actual = daysix.input
-        
+
         XCTAssertEqual(actual, expected)
     }
-    
-    func testCreatesOrbits() {
+
+    func testCreatesAstronomicalObjects() {
         XCTFail("Test pending")
     }
 
 }
 
-class OrbitTests: XCTestCase {
+class AstronomicalObjectTests: XCTestCase {
 
-    let orbit = Orbit(planet: "foo", satellite: "bar")
+    let astronomicalObject = AstronomicalObject(
+        planet: AstronomicalObject(planet: nil, satellite: "foo"),
+        satellite: "bar"
+    )
 
-    func testInitSetsSatellite() {
+    func testInitSetsName() {
         let expected = "bar"
-        
-        let actual = orbit.satellite
-        
+
+        let actual = astronomicalObject.name
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testInitSetsOrbits() {
+        let expected = AstronomicalObject(planet: nil, satellite: "foo")
+
+        let actual = astronomicalObject.orbits
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testCountOrbits() {
+        let expected = 2
+
+        let actual = astronomicalObject.countOrbits()
+
         XCTAssertEqual(actual, expected)
     }
 }
