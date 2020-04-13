@@ -14,6 +14,18 @@ class DaySixParser {
 
     func parse(inputString: String) {
         input = inputString
+        let lineSeparator = "\n"
+        let orbitSeparator = ")"
+        for line in input.components(separatedBy: lineSeparator) {
+            let bodies = line.components(separatedBy: orbitSeparator)
+            let planet_name = bodies[0]
+            let planet = AstronomicalObject(planet: nil, satellite: planet_name)
+            let satellite = bodies[1]
+            astronomicalObjects.insert(AstronomicalObject(planet: planet, satellite: satellite))
+            if !astronomicalObjects.contains(planet) {
+                astronomicalObjects.insert(AstronomicalObject(planet: nil, satellite: planet_name))
+            }
+        }
     }
 }
 
