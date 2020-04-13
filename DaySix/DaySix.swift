@@ -37,13 +37,30 @@ class DaySixParser {
     }
 
     func countTransfers() -> Int {
-        var total = 0
-        return total
+        let yourPlanet = astronomicalObjects["YOU"]!
+        let santasPlanet = astronomicalObjects["SAN"]!
+        var youToSun = Set<String>()
+        var santaToSun = Set<String>()
+
+        var nextPlanet: String?
+        nextPlanet = yourPlanet
+        while nextPlanet != nil {
+            youToSun.insert(nextPlanet!)
+            nextPlanet = astronomicalObjects[nextPlanet!]
+        }
+
+        nextPlanet = santasPlanet
+        while nextPlanet != nil {
+            santaToSun.insert(nextPlanet!)
+            nextPlanet = astronomicalObjects[nextPlanet!]
+        }
+
+        return youToSun.symmetricDifference(santaToSun).count
     }
 }
 
 func daysix(contents: String) throws -> String {
-    let part1 = DaySixParser()
-    part1.parse(inputString: contents)
-    return "Part 1: \(part1.countOrbits())"
+    let parser = DaySixParser()
+    parser.parse(inputString: contents)
+    return "Part 1: \(parser.countOrbits()) part2: \(parser.countTransfers())"
 }
