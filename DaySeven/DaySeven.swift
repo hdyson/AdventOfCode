@@ -8,8 +8,12 @@
 
 import Foundation
 
+class DaySevenParser: DayFiveParser {
+
+}
+
 func dayseven(contents: String) throws -> String {
     let parser = DaySevenParser()
-    parser.parse(inputString: contents)
-    return "Part 1: \(parser.getResults())"
+    _ = try parser.parse(script: contents)
+    return "Part 1: \(parser.getResult())"
 }
