@@ -26,4 +26,5 @@ for (index, filename) in filenames.enumerated() {
 //print("Day three: ", try daythree(contents: sourceData[3]!))
 //print("Day four: ", dayfour(min: 136760, max: 595730))
 //print("Day five: ", try dayfive(partOneInput: 1, partTwoInput: 5, contents: sourceData[5]!))
-print("Day six: ", try daysix(contents: sourceData[6]!))
+//print("Day six: ", try daysix(contents: sourceData[6]!))
+print("Day seven: ", try dayseven(contents: sourceData[7]!))
