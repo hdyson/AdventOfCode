@@ -40,7 +40,6 @@ class Solver {
     // https://stackoverflow.com/questions/34968470/calculate-all-permutations-of-a-string-in-swift#34969212
     // Keeping similar names, so let's disable the swiftlint name check:
     // swiftlint:disable identifier_name
-
     func permute(_ n: Int, _ a: inout [Int]) {
         if n == 1 {potentialPhases.append(a); return}
         for i in 0..<n-1 {
@@ -49,6 +48,7 @@ class Solver {
         }
         permute(n-1, &a)
     }
+    // swiftlint:enable identifier_name
 }
 
 class DaySevenParser: DayFiveParser {
