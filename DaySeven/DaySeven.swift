@@ -10,31 +10,42 @@ import Foundation
 
 class Solver {
     var input: Int
-    var amplifiers: [DaySevenParser]
+    var maximumSignal: Int
     var maximumPhase: [Int]
     var potentialPhases: [[Int]]
 
     init () {
         input = 0
-        amplifiers = Array(repeating: DaySevenParser(), count: 5)
+        maximumSignal = 0
         maximumPhase = [0, 1, 2, 3, 4]
         potentialPhases = []
     }
 
     func solve(script: String) throws {
+        var initialPhase = [0, 1, 2, 3, 4]
+        permute(initialPhase.count, &initialPhase)
         var output = input
-        var phases = [0, 1, 2, 3, 4]
-        for amplifier in amplifiers {
-            amplifier.input = output  // input for next amplifier is output from previous
-            amplifier.phase = phases.removeFirst()
-            _ = try amplifier.parse(script: script)
-            output = amplifier.output!
+        for phases in potentialPhases {
+            var amplifiers: [DaySevenParser]
+            amplifiers = []
+            for index in 0...4 {
+                let amplifier = DaySevenParser()
+                amplifier.input = output  // input for next amplifier is output from previous
+                amplifier.phase = phases[index]
+                _ = try amplifier.parse(script: script)
+                output = amplifier.output!
+                amplifiers.append(amplifier)
+            }
+            if output > maximumSignal {
+                maximumSignal = output
+                maximumPhase = phases
+            }
+            output = input
         }
-        return
     }
 
     func getResult() -> Int {
-        return amplifiers[amplifiers.count - 1].output!
+        return  maximumSignal
     }
     // Following adapted from:
     // https://stackoverflow.com/questions/34968470/calculate-all-permutations-of-a-string-in-swift#34969212
@@ -57,7 +68,7 @@ class DaySevenParser: DayFiveParser {
     var phaseUsed = false
 
     override func readInput() {
-        if phaseUsed {
+        if phaseUsed == false {
             elements[elements[instructionPointer + 1]] = phase!
             instructionPointer += 2
             phaseUsed = true
