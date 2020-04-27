@@ -13,16 +13,17 @@ class Solver {
     var maximumSignal: Int
     var maximumPhase: [Int]
     var potentialPhases: [[Int]]
+    var initialPhase: [Int]
 
-    init () {
+    init (_ phases: [Int] = [0, 1, 2, 3, 4]) {
         input = 0
         maximumSignal = 0
         maximumPhase = [0, 1, 2, 3, 4]
         potentialPhases = []
+        initialPhase = phases
     }
 
     func solve(script: String) throws {
-        var initialPhase = [0, 1, 2, 3, 4]
         permute(initialPhase.count, &initialPhase)
         var output = input
         for phases in potentialPhases {
