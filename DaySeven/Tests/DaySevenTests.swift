@@ -10,7 +10,7 @@
 
 import XCTest
 
-class PartOneTests: XCTestCase {
+class DaySevenPartOneTests: XCTestCase {
 
     var dayseven = Solver()
 
@@ -19,7 +19,7 @@ class PartOneTests: XCTestCase {
 
         let expected = [4, 3, 2, 1, 0]
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.maximumPhase
 
         XCTAssertEqual(actual, expected)
@@ -30,7 +30,7 @@ class PartOneTests: XCTestCase {
 
         let expected = [0, 1, 2, 3, 4]
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.maximumPhase
 
         XCTAssertEqual(actual, expected)
@@ -43,7 +43,7 @@ class PartOneTests: XCTestCase {
 
         let expected = [1, 0, 4, 3, 2]
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.maximumPhase
 
         XCTAssertEqual(actual, expected)
@@ -54,7 +54,7 @@ class PartOneTests: XCTestCase {
 
         let expected = 43210
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.getResult()
 
         XCTAssertEqual(actual, expected)
@@ -65,7 +65,7 @@ class PartOneTests: XCTestCase {
 
         let expected = 54321
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.getResult()
 
         XCTAssertEqual(actual, expected)
@@ -78,7 +78,7 @@ class PartOneTests: XCTestCase {
 
         let expected = 65210
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartOne(script: testString)
         let actual = dayseven.getResult()
 
         XCTAssertEqual(actual, expected)
@@ -96,7 +96,34 @@ class PartOneTests: XCTestCase {
 
 }
 
-class PartTwoTests: XCTestCase {
+class DaySevenPartTwoTests: XCTestCase {
+
+    func testSignalForKnownPhase1() {
+        let testString = """
+        3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5
+        """
+        let dayseven = Solver([5, 6, 7, 8, 9])
+        dayseven.potentialPhases = [[9, 8, 7, 6, 5]]
+        let expected = 139629729
+
+        try! dayseven.solvePartTwo(script: testString)
+        let actual = dayseven.getResult()
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testSignalForKnownPhase2() {
+        let testString = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,"
+            + "1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
+        let dayseven = Solver([5, 6, 7, 8, 9])
+        dayseven.potentialPhases = [[9, 7, 8, 5, 6]]
+        let expected = 18216
+
+        try! dayseven.solvePartTwo(script: testString)
+        let actual = dayseven.getResult()
+
+        XCTAssertEqual(actual, expected)
+    }
 
     func testMaxPhaseExample1() {
         let testString = """
@@ -106,21 +133,20 @@ class PartTwoTests: XCTestCase {
 
         let expected = [9, 8, 7, 6, 5]
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartTwo(script: testString)
         let actual = dayseven.maximumPhase
 
         XCTAssertEqual(actual, expected)
     }
 
     func testMaxPhaseExample2() {
-        let testString = """
-        3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10
-        """
+        let testString = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,"
+            + "1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
         let dayseven = Solver([5, 6, 7, 8, 9])
 
         let expected = [9, 7, 8, 5, 6]
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartTwo(script: testString)
         let actual = dayseven.maximumPhase
 
         XCTAssertEqual(actual, expected)
@@ -134,24 +160,22 @@ class PartTwoTests: XCTestCase {
 
         let expected = 139629729
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartTwo(script: testString)
         let actual = dayseven.getResult()
 
         XCTAssertEqual(actual, expected)
     }
 
     func testMaxSignalExample2() {
-        let testString = """
-        3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10
-        """
+        let testString = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,"
+            + "1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
         let dayseven = Solver([5, 6, 7, 8, 9])
 
         let expected = 18216
 
-        try! dayseven.solve(script: testString)
+        try! dayseven.solvePartTwo(script: testString)
         let actual = dayseven.getResult()
 
         XCTAssertEqual(actual, expected)
     }
 }
-

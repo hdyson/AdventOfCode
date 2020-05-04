@@ -23,7 +23,7 @@ class Solver {
         initialPhase = phases
     }
 
-    func solve(script: String) throws {
+    func solvePartOne(script: String) throws {
         permute(initialPhase.count, &initialPhase)
         var output = input
         for phases in potentialPhases {
@@ -45,6 +45,37 @@ class Solver {
         }
     }
 
+    func solvePartTwo(script: String) throws {
+        permute(initialPhase.count, &initialPhase)
+        var output = 0
+        for phases in potentialPhases {
+            var amplifiers: [DaySevenParser]
+            amplifiers = []
+            for index in 0...4 {
+                let amplifier = DaySevenParser()
+                amplifier.name = String(index)
+                amplifier.input = output  // input for next amplifier is output from previous
+                amplifier.phase = phases[index]
+                _ = try amplifier.parse(script: script)
+                output = amplifier.output!
+                amplifiers.append(amplifier)
+            }
+            var count = 0
+            while amplifiers[amplifiers.count-1].finished == false {
+                count += 1
+                for amplifier in amplifiers {
+                    amplifier.input = output
+                    _ = try amplifier.parse()
+                    output = amplifier.output!
+                }
+            }
+            if output > maximumSignal {
+                maximumSignal = output
+                maximumPhase = phases
+            }
+            output = input
+        }
+    }
     func getResult() -> Int {
         return  maximumSignal
     }
@@ -67,6 +98,62 @@ class DaySevenParser: DayFiveParser {
 
     var phase: Int?
     var phaseUsed = false
+    var finished = false
+    var name: String
+
+    override init(noun: Int? = nil, verb: Int? = nil) {
+        name = "undefined"
+        super.init(noun: noun, verb: verb)
+        instructionPointer = 0
+    }
+
+    func parse() throws -> String {
+        elements = try execute(programme: elements)
+        let resultStrings = elements.map {String($0)}
+        return resultStrings.joined(separator: separator)
+    }
+
+    // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
+    // complexity further though.
+    // swiftlint:disable cyclomatic_complexity
+    override func execute(programme: [Int]) throws -> [Int] {
+
+        elements = programme
+
+        if finished == false {
+            mainloop: repeat {
+                let opcode = getOpcode()
+                switch opcode {
+                case 1:
+                    addition()
+                case 2:
+                    multiplication()
+                case 3:
+                    if input == nil {
+                        break mainloop
+                    }
+                    readInput()
+                case 4:
+                    setOutput()
+                case 5:
+                    jumpIfTrue()
+                case 6:
+                    jumpIfFalse()
+                case 7:
+                    lessThan()
+                case 8:
+                    equals()
+                case 99:
+                    finished = true
+                    break mainloop
+                default:
+                    throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
+                }
+            } while true
+        }
+        return elements
+    }
+    // swiftlint:enable cyclomatic_complexity
 
     override func readInput() {
         if phaseUsed == false {
@@ -75,12 +162,15 @@ class DaySevenParser: DayFiveParser {
             phaseUsed = true
         } else {
             super.readInput()
+            input = nil
         }
     }
 }
 
 func dayseven(contents: String) throws -> String {
-    let solver = Solver()
-    _ = try solver.solve(script: contents)
-    return "Part 1: \(solver.getResult())"
+    let partOne = Solver()
+    _ = try partOne.solvePartOne(script: contents)
+    let partTwo = Solver([5, 6, 7, 8, 9])
+    _ = try partTwo.solvePartTwo(script: contents)
+    return "Part 1: \(partOne.getResult()) Part 2: \(partTwo.getResult())"
 }
