@@ -27,6 +27,9 @@
 		F4AC0DEE2409A58D0033F65D /* DayFiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AC0DED2409A58D0033F65D /* DayFiveTests.swift */; };
 		F4AC0DF02409A59D0033F65D /* DayFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AC0DEF2409A59D0033F65D /* DayFive.swift */; };
 		F4AC0DF12409A59D0033F65D /* DayFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AC0DEF2409A59D0033F65D /* DayFive.swift */; };
+		F4C6502C24672CF40006168B /* DayEightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C6502B24672CF40006168B /* DayEightTests.swift */; };
+		F4C6502E24672D070006168B /* DayEight.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C6502D24672D070006168B /* DayEight.swift */; };
+		F4C65030246737380006168B /* DayEight.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C6502D24672D070006168B /* DayEight.swift */; };
 		F4DBA5D823F4A06400438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
 		F4DBA5E623F4A23800438201 /* DayOneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5E523F4A23800438201 /* DayOneTests.swift */; };
 		F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBA5D723F4A06400438201 /* main.swift */; };
@@ -61,6 +64,9 @@
 		F4AC0DED2409A58D0033F65D /* DayFiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFiveTests.swift; sourceTree = "<group>"; };
 		F4AC0DEF2409A59D0033F65D /* DayFive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFive.swift; sourceTree = "<group>"; };
 		F4AC0DF22409A7780033F65D /* input_day5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_day5.txt; sourceTree = "<group>"; };
+		F4C6502B24672CF40006168B /* DayEightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayEightTests.swift; path = Tests/DayEightTests.swift; sourceTree = "<group>"; };
+		F4C6502D24672D070006168B /* DayEight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEight.swift; sourceTree = "<group>"; };
+		F4C6502F24672E690006168B /* input_day8.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_day8.txt; sourceTree = "<group>"; };
 		F4D95D48240865F7006BA22A /* input_day3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_day3.txt; sourceTree = "<group>"; };
 		F4DBA5D423F4A06400438201 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DBA5D723F4A06400438201 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -124,9 +130,19 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		F4C6502A24672CD10006168B /* Day Eight */ = {
+			isa = PBXGroup;
+			children = (
+				F4C6502B24672CF40006168B /* DayEightTests.swift */,
+				F4C6502D24672D070006168B /* DayEight.swift */,
+			);
+			path = "Day Eight";
+			sourceTree = "<group>";
+		};
 		F4DBA5CB23F4A06400438201 = {
 			isa = PBXGroup;
 			children = (
+				F4C6502A24672CD10006168B /* Day Eight */,
 				F461A8B924463D91005BB116 /* DaySeven */,
 				F4386EB22443524600348533 /* DaySix */,
 				F4E42E4B24353014006664F2 /* DayFive */,
@@ -260,6 +276,7 @@
 				F4F9733C23F744130092D992 /* input_day2.txt */,
 				F4F9733B23F744020092D992 /* input_day1.txt */,
 				F4D95D48240865F7006BA22A /* input_day3.txt */,
+				F4C6502F24672E690006168B /* input_day8.txt */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -381,6 +398,7 @@
 				F4DBA5D823F4A06400438201 /* main.swift in Sources */,
 				F46C6EF123F96CDE0003DC2D /* DayTwo.swift in Sources */,
 				F46C6EEE23F960A60003DC2D /* DayOne.swift in Sources */,
+				F4C6502E24672D070006168B /* DayEight.swift in Sources */,
 				F4AC0DF02409A59D0033F65D /* DayFive.swift in Sources */,
 				F44DC58C23F9EE26008C99A3 /* DayThree.swift in Sources */,
 			);
@@ -390,11 +408,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C6502C24672CF40006168B /* DayEightTests.swift in Sources */,
 				F46C6EF223F96ED80003DC2D /* DayTwo.swift in Sources */,
 				F44DC58A23F9C9FD008C99A3 /* DayThreeTests.swift in Sources */,
 				F4386EB82443529900348533 /* DaySix.swift in Sources */,
 				F436331A23FC9733005C2490 /* DayThree.swift in Sources */,
 				F4745BA12403087900A76573 /* DayFour.swift in Sources */,
+				F4C65030246737380006168B /* DayEight.swift in Sources */,
 				F4DBA5EC23F4A3EC00438201 /* main.swift in Sources */,
 				F461A8BF24463DC2005BB116 /* DaySeven.swift in Sources */,
 				F461A8BE24463DBE005BB116 /* DaySevenTests.swift in Sources */,
