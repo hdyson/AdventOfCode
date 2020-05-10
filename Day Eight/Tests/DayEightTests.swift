@@ -6,6 +6,8 @@
 //  Copyright © 2020 Harold Dyson. All rights reserved.
 //
 
+// swiftlint:disable force_try
+
 import XCTest
 
 class DayEightTests: XCTestCase {
@@ -16,7 +18,7 @@ class DayEightTests: XCTestCase {
 
     func testFewestZeros() throws {
         let expected = 0
-        let solver = DayEightSolver(data: data, width: width, height: height)
+        let solver = try! DayEightSolver(data: data, width: width, height: height)
         let actual = solver.layerWithFewestZeroes
 
         XCTAssertEqual(expected, actual)
@@ -24,11 +26,18 @@ class DayEightTests: XCTestCase {
 
     func testSolvePartOne() throws {
         let expected = 1
-        let solver = DayEightSolver(data: data, width: width, height: height)
+        let solver = try! DayEightSolver(data: data, width: width, height: height)
         let actual = solver.solve()
 
         XCTAssertEqual(expected, actual)
-
     }
 
+    func testSolvePartTwo() {
+        let expected = [[0, 1], [1, 0]]
+
+        let solver = try! DayEightSolver(data: "0222112222120000", width: 2, height: 2)
+        let actual = solver.palimpsest()
+
+        XCTAssertEqual(expected, actual)
+    }
 }
