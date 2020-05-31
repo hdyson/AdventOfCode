@@ -28,4 +28,5 @@ for (index, filename) in filenames.enumerated() {
 //print("Day five: ", try dayfive(partOneInput: 1, partTwoInput: 5, contents: sourceData[5]!))
 //print("Day six: ", try daysix(contents: sourceData[6]!))
 //print("Day seven: ", try dayseven(contents: sourceData[7]!))
-print("Day eight: ", try dayeight(contents: sourceData[8]!))
+//print("Day eight: ", try dayeight(contents: sourceData[8]!))
+print("Day nine: ", try daynine(contents: sourceData[9]!))

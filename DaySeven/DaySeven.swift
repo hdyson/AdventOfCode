@@ -25,55 +25,55 @@ class Solver {
 
     func solvePartOne(script: String) throws {
         permute(initialPhase.count, &initialPhase)
-        var output = input
+        var output = [input]
         for phases in potentialPhases {
             var amplifiers: [DaySevenParser]
             amplifiers = []
             for index in 0...4 {
                 let amplifier = DaySevenParser()
-                amplifier.input = output  // input for next amplifier is output from previous
+                amplifier.input = output[0]  // input for next amplifier is output from previous
                 amplifier.phase = phases[index]
                 _ = try amplifier.parse(script: script)
-                output = amplifier.output!
+                output = amplifier.output
                 amplifiers.append(amplifier)
             }
-            if output > maximumSignal {
-                maximumSignal = output
+            if output[0] > maximumSignal {
+                maximumSignal = output[0]
                 maximumPhase = phases
             }
-            output = input
+            output[0] = input
         }
     }
 
     func solvePartTwo(script: String) throws {
         permute(initialPhase.count, &initialPhase)
-        var output = 0
+        var output = [0]
         for phases in potentialPhases {
             var amplifiers: [DaySevenParser]
             amplifiers = []
             for index in 0...4 {
                 let amplifier = DaySevenParser()
                 amplifier.name = String(index)
-                amplifier.input = output  // input for next amplifier is output from previous
+                amplifier.input = output[0]  // input for next amplifier is output from previous
                 amplifier.phase = phases[index]
                 _ = try amplifier.parse(script: script)
-                output = amplifier.output!
+                output = amplifier.output
                 amplifiers.append(amplifier)
             }
             var count = 0
             while amplifiers[amplifiers.count-1].finished == false {
                 count += 1
                 for amplifier in amplifiers {
-                    amplifier.input = output
+                    amplifier.input = output[0]
                     _ = try amplifier.parse()
-                    output = amplifier.output!
+                    output = amplifier.output
                 }
             }
-            if output > maximumSignal {
-                maximumSignal = output
+            if output[0] > maximumSignal {
+                maximumSignal = output[0]
                 maximumPhase = phases
             }
-            output = input
+            output = [input]
         }
     }
     func getResult() -> Int {

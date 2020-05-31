@@ -6,12 +6,14 @@
 //  Copyright © 2020 Harold Dyson. All rights reserved.
 //
 
+// swiftlint:disable force_try
+
 import Foundation
 
 class DayFiveParser: DayTwoParser {
 
     var input: Int?
-    var output: Int?
+    var output = [Int]()
 
     // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
     // complexity further though.
@@ -53,13 +55,13 @@ class DayFiveParser: DayTwoParser {
     // swiftlint:enable cyclomatic_complexity
 
     func addition() {
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
         instructionPointer += 4
     }
 
     func multiplication() {
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
         instructionPointer += 4
     }
@@ -72,15 +74,15 @@ class DayFiveParser: DayTwoParser {
     func setOutput() {
         let modes = getModes()
         if modes.count > 0 && modes[0] == 1 {
-            output = elements[instructionPointer + 1]
+            output = [elements[instructionPointer + 1]]
         } else {
-            output = elements[elements[instructionPointer + 1]]
+            output = [elements[elements[instructionPointer + 1]]]
         }
         instructionPointer += 2
     }
 
     func jumpIfTrue() {
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand != 0 {
             instructionPointer = operands.secondOperand
         } else {
@@ -89,7 +91,7 @@ class DayFiveParser: DayTwoParser {
     }
 
     func jumpIfFalse() {
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand == 0 {
             instructionPointer = operands.secondOperand
         } else {
@@ -99,7 +101,7 @@ class DayFiveParser: DayTwoParser {
 
     func equals() {
         // equals
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand == operands.secondOperand {
             elements[elements[instructionPointer + 3]] = 1
         } else {
@@ -113,7 +115,7 @@ class DayFiveParser: DayTwoParser {
     }
 
     func lessThan() {
-        let operands = getOperands(pointer: instructionPointer)
+        let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand < operands.secondOperand {
             elements[elements[instructionPointer + 3]] = 1
         } else {
@@ -124,8 +126,8 @@ class DayFiveParser: DayTwoParser {
 
     func getResult() -> [Int] {
         var result = [Int]()
-        if output != nil {
-            result = [output!]
+        if output.count != 0 {
+            result = output
         } else {
             // preserve day 2 behaviour
             result = elements
@@ -158,7 +160,7 @@ class DayFiveParser: DayTwoParser {
         return modes
     }
 
-    func getOperands(pointer instructionPointer: Int) -> (firstOperand: Int, secondOperand: Int) {
+    func getOperands(pointer instructionPointer: Int) throws -> (firstOperand: Int, secondOperand: Int) {
         let parameterModes = getModes()
         var firstOperand = 0
         var secondOperand = 0
@@ -195,5 +197,5 @@ func dayfive(partOneInput: Int, partTwoInput: Int, contents: String) throws -> S
     let part2 = DayFiveParser()
     part2.input = partTwoInput
     _ = try part2.parse(script: contents)
-    return "Part 1: \(part1.output!)  Part 2: \(part2.output!)"
+    return "Part 1: \(part1.output)  Part 2: \(part2.output)"
 }

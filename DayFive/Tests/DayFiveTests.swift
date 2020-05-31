@@ -21,7 +21,7 @@ class TestDayFivePartOne: XCTestCase {
 
         dayfive.input = 999
         try! _ = dayfive.parse(script: "3,0,4,0,99")
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
@@ -45,7 +45,7 @@ class TestDayFivePartTwo: XCTestCase {
 
         dayfive.input = 999
         try! _ = dayfive.parse(script: "3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9")
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
@@ -55,7 +55,7 @@ class TestDayFivePartTwo: XCTestCase {
 
         dayfive.input = 999
         try! _ = dayfive.parse(script: "3,3,1105,-1,9,1101,0,0,12,4,12,99,1")
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
@@ -69,7 +69,7 @@ class TestDayFivePartTwo: XCTestCase {
 1101,1000,1,20,4,20,1105,1,46,98,99
 """
         )
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
@@ -83,7 +83,7 @@ class TestDayFivePartTwo: XCTestCase {
 1101,1000,1,20,4,20,1105,1,46,98,99
 """
         )
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
@@ -97,7 +97,7 @@ class TestDayFivePartTwo: XCTestCase {
 1101,1000,1,20,4,20,1105,1,46,98,99
 """
         )
-        let actual = dayfive.output
+        let actual = dayfive.output[0]
 
         XCTAssertEqual(actual, expected)
     }
