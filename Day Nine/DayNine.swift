@@ -24,7 +24,8 @@ class DayNineParser: DaySevenParser {
 
         if finished == false {
             mainloop: repeat {
-                let opcode = getOpcode()                switch opcode {
+                let opcode = getOpcode()
+                switch opcode {
                 case 1:
                     addition()
                 case 2:
