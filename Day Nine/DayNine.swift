@@ -152,6 +152,7 @@ class DayNineParser: DaySevenParser {
 
 func daynine(contents: String) throws -> String {
     let partOne = DayNineParser()
+    partOne.input = 1
     _ = try partOne.parse(script: contents)
     return "Part 1: \(partOne.output)"
 }
