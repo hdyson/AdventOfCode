@@ -94,77 +94,8 @@ class Solver {
     // swiftlint:enable identifier_name
 }
 
-class DaySevenParser: DayFiveParser {
+	class DaySevenParser: Computer {
 
-    var phase: Int?
-    var phaseUsed = false
-    var finished = false
-    var name: String
-
-    override init(noun: Int? = nil, verb: Int? = nil) {
-        name = "undefined"
-        super.init(noun: noun, verb: verb)
-        instructionPointer = 0
-    }
-
-    func parse() throws -> String {
-        elements = try execute(programme: elements)
-        let resultStrings = elements.map {String($0)}
-        return resultStrings.joined(separator: separator)
-    }
-
-    // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
-    // complexity further though.
-    // swiftlint:disable cyclomatic_complexity
-    override func execute(programme: [Int]) throws -> [Int] {
-
-        elements = programme
-
-        if finished == false {
-            mainloop: repeat {
-                let opcode = getOpcode()
-                switch opcode {
-                case 1:
-                    addition()
-                case 2:
-                    multiplication()
-                case 3:
-                    if input == nil {
-                        break mainloop
-                    }
-                    readInput()
-                case 4:
-                    setOutput()
-                case 5:
-                    jumpIfTrue()
-                case 6:
-                    jumpIfFalse()
-                case 7:
-                    lessThan()
-                case 8:
-                    equals()
-                case 99:
-                    finished = true
-                    break mainloop
-                default:
-                    throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
-                }
-            } while true
-        }
-        return elements
-    }
-    // swiftlint:enable cyclomatic_complexity
-
-    override func readInput() {
-        if phaseUsed == false {
-            elements[elements[instructionPointer + 1]] = phase!
-            instructionPointer += 2
-            phaseUsed = true
-        } else {
-            super.readInput()
-            input = nil
-        }
-    }
 }
 
 func dayseven(contents: String) throws -> String {

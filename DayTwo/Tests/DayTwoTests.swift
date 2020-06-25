@@ -15,7 +15,7 @@ class TestDayTwo: XCTestCase {
     var daytwo = DayTwoParser()
 
     func testOpcode() {
-        XCTAssertThrowsError(try daytwo.parse(script: "3,0,0,0"))
+        XCTAssertThrowsError(try daytwo.parse(script: "98,0,0,0"))
     }
 
     func testExample1() {
