@@ -20,6 +20,7 @@ class TestDayFivePartOne: XCTestCase {
         let expected = 999
 
         dayfive.input = 999
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: "3,0,4,0,99")
         let actual = dayfive.output[0]
 
@@ -44,6 +45,7 @@ class TestDayFivePartTwo: XCTestCase {
         let expected = 1
 
         dayfive.input = 999
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: "3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9")
         let actual = dayfive.output[0]
 
@@ -54,6 +56,7 @@ class TestDayFivePartTwo: XCTestCase {
         let expected = 1
 
         dayfive.input = 999
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: "3,3,1105,-1,9,1101,0,0,12,4,12,99,1")
         let actual = dayfive.output[0]
 
@@ -64,6 +67,7 @@ class TestDayFivePartTwo: XCTestCase {
         let expected = 999
 
         dayfive.input = 0
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: """
 3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
 1101,1000,1,20,4,20,1105,1,46,98,99
@@ -78,6 +82,7 @@ class TestDayFivePartTwo: XCTestCase {
         let expected = 1000
 
         dayfive.input = 8
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: """
 3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
 1101,1000,1,20,4,20,1105,1,46,98,99
@@ -92,6 +97,7 @@ class TestDayFivePartTwo: XCTestCase {
         let expected = 1001
 
         dayfive.input = 9
+        dayfive.phaseUsed = true  // required for changes to intcode computer in day 7
         try! _ = dayfive.parse(script: """
 3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,\
 1101,1000,1,20,4,20,1105,1,46,98,99
