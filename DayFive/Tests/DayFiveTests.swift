@@ -154,7 +154,7 @@ class TestGetModes: XCTestCase {
     var dayfive = DayFiveParserMock()
 
     func testGetModesMissing() {
-        let expected = [Int]()
+        let expected = [0, 0, 0]
 
         dayfive.setInstruction(instruction: 1)
         let actual = dayfive.getModes()
@@ -163,7 +163,7 @@ class TestGetModes: XCTestCase {
     }
 
     func testGetModes1002() {
-        let expected = [1, 0]
+        let expected = [0, 1, 0]
 
         dayfive.setInstruction(instruction: 1002)
         let actual = dayfive.getModes()

@@ -12,6 +12,7 @@ import Foundation
 
 enum ParseError: Error {
     case invalidOpcode(opcode: Int)
+    case invalidMode(name: String, mode: Int)
 }
 
 class Computer {
@@ -27,6 +28,8 @@ class Computer {
     var phaseUsed = false
     var finished = false
     var name: String
+    var relativeBase = 0
+    var parameterModes = [Int]()
 
     init (noun: Int? = nil, verb: Int? = nil) {
         self.noun = noun
@@ -67,6 +70,7 @@ class Computer {
         if finished == false {
             mainloop: repeat {
                 let opcode = getOpcode()
+                parameterModes = getModes()
                 switch opcode {
                 case 1:
                     addition()
@@ -78,7 +82,7 @@ class Computer {
                     }
                     readInput()
                 case 4:
-                    setOutput()
+                    try setOutput()
                 case 5:
                     jumpIfTrue()
                 case 6:
@@ -87,6 +91,8 @@ class Computer {
                     lessThan()
                 case 8:
                     equals()
+                case 9:
+                    relativeBaseOffset()
                 case 99:
                     finished = true
                     break mainloop
@@ -123,13 +129,10 @@ class Computer {
         }
     }
 
-    func setOutput() {
-        let modes = getModes()
-        if modes.count > 0 && modes[0] == 1 {
-            output = [elements[instructionPointer + 1]]
-        } else {
-            output = [elements[elements[instructionPointer + 1]]]
-        }
+    func setOutput() throws {
+        // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
+        // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
+        output = [try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
         instructionPointer += 2
     }
 
@@ -160,6 +163,13 @@ class Computer {
             elements[elements[instructionPointer + 3]] = 0
         }
         instructionPointer += 4
+    }
+
+    func relativeBaseOffset() {
+        // swiftlint:disable force_try
+        let operands = try! getOperands(pointer: instructionPointer)
+        relativeBase += operands.firstOperand
+        instructionPointer += 2
     }
 
     func getInstruction() -> Int {
@@ -207,37 +217,41 @@ class Computer {
             modes.removeLast()
             modes.removeLast()
         } else {
-            modes = []
+            modes = [0, 0, 0]
+        }
+        while modes.count < 3 {
+            modes.insert(0, at: 0)
         }
         return modes
     }
 
-    func getOperands(pointer instructionPointer: Int) throws -> (firstOperand: Int, secondOperand: Int) {
-        let parameterModes = getModes()
-        var firstOperand = 0
-        var secondOperand = 0
-        if parameterModes.count == 0 {
-            firstOperand = elements[elements[instructionPointer + 1]]
-            secondOperand = elements[elements[instructionPointer + 2]]
-        } else if parameterModes.count == 1 {
-            if parameterModes[0] == 0 {
-                firstOperand = elements[elements[instructionPointer + 1]]
-            } else {
-                firstOperand = elements[instructionPointer + 1]
-            }
-            secondOperand = elements[elements[instructionPointer + 2]]
-        } else if parameterModes.count >= 2 {
-            if parameterModes[1] == 0 {
-                firstOperand = elements[elements[instructionPointer + 1]]
-            } else {
-                firstOperand = elements[instructionPointer + 1]
-            }
-            if parameterModes[0] == 0 {
-                secondOperand = elements[elements[instructionPointer + 2]]
-            } else {
-                secondOperand = elements[instructionPointer + 2]
-            }
+    func getAddress(mode: Int, offset: Int) throws -> Int {
+        // mode is integer from puzzle
+        // offset is number of addresses from mode/opcodes to operand - so 1 for first operand.
+        let modeNames: [Int: String] = [0: "position", 1: "immediate", 2: "relative"]
+        let modeName = modeNames[mode]
+
+        let address: Int
+        switch modeName {
+        case "position":
+            address = elements[instructionPointer + offset]
+        case "immediate":
+            address = instructionPointer + offset
+        case "relative":
+            address = elements[instructionPointer + offset] + relativeBase
+        default:
+            throw ParseError.invalidMode(name: modeName ?? "", mode: mode)
         }
+        return address
+    }
+
+    func getOperands(pointer instructionPointer: Int) throws -> (firstOperand: Int, secondOperand: Int) {
+        let firstOperand: Int
+        let secondOperand: Int
+
+        // As per puzzle text, parameter modes are rtl while instructions are ltr.
+        firstOperand = try elements[getAddress(mode: parameterModes[2], offset: 1)]
+        secondOperand = try elements[getAddress(mode: parameterModes[1], offset: 2)]
         return(firstOperand, secondOperand)
     }
 }
