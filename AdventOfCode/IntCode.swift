@@ -73,14 +73,14 @@ class Computer {
                 parameterModes = getModes()
                 switch opcode {
                 case 1:
-                    addition()
+                    try addition()
                 case 2:
-                    multiplication()
+                    try multiplication()
                 case 3:
                     if input == nil {
                         break mainloop
                     }
-                    readInput()
+                    try readInput()
                 case 4:
                     try setOutput()
                 case 5:
@@ -88,9 +88,9 @@ class Computer {
                 case 6:
                     jumpIfFalse()
                 case 7:
-                    lessThan()
+                    try lessThan()
                 case 8:
-                    equals()
+                    try equals()
                 case 9:
                     relativeBaseOffset()
                 case 99:
@@ -104,26 +104,26 @@ class Computer {
         return elements
     }
     // swiftlint:enable cyclomatic_complexity
-
-    func addition() {
-        let operands = try! getOperands(pointer: instructionPointer)
-        elements[elements[instructionPointer + 3]] = operands.firstOperand + operands.secondOperand
+    func addition() throws {
+        let operands = try getOperands(pointer: instructionPointer)
+        // 0 for parameter mode of last parameter (parameter mdoes are rtl)
+        try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand + operands.secondOperand
         instructionPointer += 4
     }
 
-    func multiplication() {
-        let operands = try! getOperands(pointer: instructionPointer)
-        elements[elements[instructionPointer + 3]] = operands.firstOperand * operands.secondOperand
+    func multiplication() throws {
+        let operands = try getOperands(pointer: instructionPointer)
+        try elements[getAddress(mode: parameterModes.removeLast(), offset: 3)] = operands.firstOperand * operands.secondOperand
         instructionPointer += 4
     }
 
-    func readInput() {
+    func readInput() throws {
         if phaseUsed == false {
-            elements[elements[instructionPointer + 1]] = phase!
+            try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = phase!
             instructionPointer += 2
             phaseUsed = true
         } else {
-            elements[elements[instructionPointer + 1]] = input!
+            try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
             instructionPointer += 2
             input = nil
         }
@@ -154,14 +154,16 @@ class Computer {
         }
     }
 
-    func equals() {
+    func equals() throws {
         // equals
+        let result: Int
         let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand == operands.secondOperand {
-            elements[elements[instructionPointer + 3]] = 1
+            result = 1
         } else {
-            elements[elements[instructionPointer + 3]] = 0
+            result = 0
         }
+        try elements[getAddress(mode: parameterModes.removeLast(), offset: 3)] = result
         instructionPointer += 4
     }
 
@@ -176,13 +178,17 @@ class Computer {
         return elements[instructionPointer]
     }
 
-    func lessThan() {
+    func lessThan() throws {
+        let result: Int
         let operands = try! getOperands(pointer: instructionPointer)
         if operands.firstOperand < operands.secondOperand {
-            elements[elements[instructionPointer + 3]] = 1
+            result = 1
         } else {
-            elements[elements[instructionPointer + 3]] = 0
+            result = 0
         }
+        // 0 for parameter mode of last parameter (parameter mdoes are rtl)
+        let address = try getAddress(mode: parameterModes[0], offset: 3)
+        elements[address] = result
         instructionPointer += 4
     }
 
