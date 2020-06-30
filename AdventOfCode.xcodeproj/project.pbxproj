@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F40018CF24ABC2C600B2023C /* TestExtensibleArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40018CE24ABC2C600B2023C /* TestExtensibleArray.swift */; };
 		F436331A23FC9733005C2490 /* DayThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DC58B23F9EE26008C99A3 /* DayThree.swift */; };
 		F4386EB52443527900348533 /* DaySixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4386EB42443527900348533 /* DaySixTests.swift */; };
 		F4386EB72443529900348533 /* DaySix.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4386EB62443529900348533 /* DaySix.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F40018CE24ABC2C600B2023C /* TestExtensibleArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExtensibleArray.swift; sourceTree = "<group>"; };
 		F4386EB42443527900348533 /* DaySixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySixTests.swift; sourceTree = "<group>"; };
 		F4386EB62443529900348533 /* DaySix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySix.swift; sourceTree = "<group>"; };
 		F4386EB9244356DC00348533 /* input_day6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_day6.txt; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				F4DBA5E723F4A23800438201 /* Info.plist */,
+				F40018CE24ABC2C600B2023C /* TestExtensibleArray.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				F4DBA5E623F4A23800438201 /* DayOneTests.swift in Sources */,
 				F4AC0DEE2409A58D0033F65D /* DayFiveTests.swift in Sources */,
 				F4F9733923F743B00092D992 /* DayTwoTests.swift in Sources */,
+				F40018CF24ABC2C600B2023C /* TestExtensibleArray.swift in Sources */,
 				F4E1018624902CAD0046FD8B /* IntCode.swift in Sources */,
 				F4745B9E240306AC00A76573 /* DayFourTests.swift in Sources */,
 				F4386EB52443527900348533 /* DaySixTests.swift in Sources */,
