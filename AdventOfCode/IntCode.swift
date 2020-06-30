@@ -15,7 +15,7 @@ enum ParseError: Error {
     case invalidMode(name: String, mode: Int)
 }
 
-struct ExtensibleArray {
+class ExtensibleArray {
     // Necessary behaviour:
     // 1. Initial values create a contiguous array
     // 2. Access to value:
@@ -25,22 +25,47 @@ struct ExtensibleArray {
     //              2. Store start value and length of new array
     //              3. Check new array not adjacent to existing array (if so, merge - non-zero value wins if overlap)
     var backingStore = [[Int]]()
+    var backingStoreStartIndices = [Int]()
+    let newArraySize = 40  // Arbitrary - instruction up to 4 integers wide, so gives enough room for at least 10 instructions.
 
     init (_ values: [Int]) {
         backingStore.append(values)
+        backingStoreStartIndices.append(0)
     }
 
     init () {
         backingStore.append([Int]())
+        backingStoreStartIndices.append(0)
     }
 
     subscript (index: Int) -> Int {
         // Swift magic method to implement [] syntax
         get {
-            return backingStore[0][index]
+            var result : Int?
+            var valueFound = false
+            for arrayIndex in 0..<backingStore.count {
+                let arrayStart = backingStoreStartIndices[arrayIndex]
+                let arrayEnd = arrayStart + backingStore[arrayIndex].count
+                if arrayStart <= index && index <= arrayEnd {
+                    result = backingStore[arrayIndex][index - backingStoreStartIndices[arrayIndex]]
+                    valueFound = true
+                    break
+                }
+            }
+            if !valueFound {
+                growArray(index)
+                result = 0
+            }
+            return result ?? 0
         }
         set(newValue) {
-            backingStore[0][index] = newValue
+            if index < backingStore[0].count {
+                backingStore[0][index] = newValue
+            } else {
+                growArray(index)
+                let arrayIndex = backingStore.count - 1
+                backingStore[arrayIndex][index - backingStoreStartIndices[arrayIndex]] = newValue
+            }
         }
     }
 
@@ -50,6 +75,12 @@ struct ExtensibleArray {
 
     func map (function: (Int) -> String) -> [String] {
         return backingStore[0].map(function)
+    }
+
+    func growArray(_ index: Int) {
+        backingStoreStartIndices.append(index)
+        let newArray = Array(repeating: 0, count: newArraySize)
+        backingStore.append(newArray)
     }
 }
 

@@ -28,7 +28,7 @@ class TestExtensibleArray: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
-    func testGetUninitialisedValue() throws {
+    func testGetUninitialisedValue() {
         let expected = 0
 
         let actual = array[1000]
@@ -36,5 +36,13 @@ class TestExtensibleArray: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    func testGettingValueFromSecondArray() {
+        let expected = 2
+
+        array[1000] = 2
+        let actual = array[1000]
+
+        XCTAssertEqual(actual, expected)
+    }
 
 }
