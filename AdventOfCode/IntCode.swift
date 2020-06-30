@@ -15,12 +15,50 @@ enum ParseError: Error {
     case invalidMode(name: String, mode: Int)
 }
 
+struct ExtensibleArray {
+    // Necessary behaviour:
+    // 1. Initial values create a contiguous array
+    // 2. Access to value:
+    //     1. Check if position in any existing array
+    //         If not:
+    //              1. creates new array of N elements initialised to 0
+    //              2. Store start value and length of new array
+    //              3. Check new array not adjacent to existing array (if so, merge - non-zero value wins if overlap)
+    var backingStore = [[Int]]()
+
+    init (_ values: [Int]) {
+        backingStore.append(values)
+    }
+
+    init () {
+        backingStore.append([Int]())
+    }
+
+    subscript (index: Int) -> Int {
+        // Swift magic method to implement [] syntax
+        get {
+            return backingStore[0][index]
+        }
+        set(newValue) {
+            backingStore[0][index] = newValue
+        }
+    }
+
+    func map (function: (Int) -> Int) -> [Int] {
+        return backingStore[0].map(function)
+    }
+
+    func map (function: (Int) -> String) -> [String] {
+        return backingStore[0].map(function)
+    }
+}
+
 class Computer {
     let separator=","
 
     let noun: Int?
     let verb: Int?
-    var elements = [Int]()
+    var elements = ExtensibleArray()
     var instructionPointer = 0
     var input: Int?
     var output = [Int]()
@@ -45,7 +83,7 @@ class Computer {
             return resultStrings.joined(separator: separator)
         } else {
             let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
-            elements = elementString.map {Int($0)!}
+            elements = ExtensibleArray(elementString.map {Int($0)!})
 
             // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
             if noun != nil {
@@ -64,7 +102,7 @@ class Computer {
     // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
     // complexity further though.
     // swiftlint:disable cyclomatic_complexity
-    func execute(programme: [Int]) throws -> [Int] {
+    func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
         elements = programme
 
         if finished == false {
@@ -192,10 +230,10 @@ class Computer {
         instructionPointer += 4
     }
 
-    func getResult() -> [Int] {
-        var result = [Int]()
+    func getResult() -> ExtensibleArray {
+        let result : ExtensibleArray
         if output.count != 0 {
-            result = output
+            result = ExtensibleArray(output)
         } else {
             // preserve day 2 behaviour
             result = elements

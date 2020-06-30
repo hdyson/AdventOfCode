@@ -72,6 +72,7 @@
 		F4AC0DED2409A58D0033F65D /* DayFiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFiveTests.swift; sourceTree = "<group>"; };
 		F4AC0DEF2409A59D0033F65D /* DayFive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayFive.swift; sourceTree = "<group>"; };
 		F4AC0DF22409A7780033F65D /* input_day5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_day5.txt; sourceTree = "<group>"; };
+		F4B7A42C24AA65AB001C398D /* requirements.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = requirements.org; sourceTree = "<group>"; };
 		F4C6502B24672CF40006168B /* DayEightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayEightTests.swift; path = Tests/DayEightTests.swift; sourceTree = "<group>"; };
 		F4C6502D24672D070006168B /* DayEight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEight.swift; sourceTree = "<group>"; };
 		F4C6502F24672E690006168B /* input_day8.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_day8.txt; sourceTree = "<group>"; };
@@ -168,6 +169,7 @@
 		F4DBA5CB23F4A06400438201 = {
 			isa = PBXGroup;
 			children = (
+				F4B7A42C24AA65AB001C398D /* requirements.org */,
 				F46C2B652483037E00176175 /* Day Nine */,
 				F4C6502A24672CD10006168B /* Day Eight */,
 				F461A8B924463D91005BB116 /* DaySeven */,
