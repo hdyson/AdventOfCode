@@ -6,7 +6,8 @@
 //  Copyright © 2020 Harold Dyson. All rights reserved.
 //
 
-// swiftlint:disable force_try
+// This file includes the IntCode computer common to several days puzzles, while day-specific functionality is handled
+// in sub classes.
 
 import Foundation
 
@@ -17,11 +18,13 @@ enum ParseError: Error {
 
 class ExtensibleArray {
 
-    // A dict with an array-like interface.
+    // A dict with an array-like interface.  Enables changing the underlying storage model without needing to change
+    // every call.
 
     var backingStore: [Int: Int] = [:]
 
     init (_ values: [Int]) {
+        // Enables initialising from an array of Ints
         for (index, value) in values.enumerated() {
             backingStore[index] = value
         }
@@ -34,7 +37,7 @@ class ExtensibleArray {
         // Swift magic method to implement [] syntax
         get {
             var result: Int
-            result = backingStore[index, default: 0]
+            result = backingStore[index, default: 0]  // 0 default from day 9 puzzle text.
             return result
         }
         set(newValue) {
@@ -43,6 +46,7 @@ class ExtensibleArray {
     }
 
     func asStringArray () -> [String] {
+        // Some days need output of storage array as a string.
         var maxKey = 0
         for key in backingStore.keys where key > maxKey {
             maxKey = key
@@ -58,42 +62,29 @@ class ExtensibleArray {
 class Computer {
     let separator=","
 
-    let noun: Int?
-    let verb: Int?
     var elements = ExtensibleArray()
     var instructionPointer = 0
     var input: Int?
     var output = [Int]()
-    var phase: Int?
-    var phaseUsed = false
-    var finished = false
-    var name: String
-    var relativeBase = 0
+    var relativeBase = 0  // Added day 9
     var parameterModes = [Int]()
 
-    init (noun: Int? = nil, verb: Int? = nil) {
-        self.noun = noun
-        self.verb = verb
-        name = "undefined"
+    init () {
         instructionPointer = 0
     }
 
     func parse(script: String = "") throws -> String {
+
+        // TODO: is the complexity here just for day 7?  Can this be moved to the day 7 subclass?
         if script == "" {
             elements = try execute(programme: elements)
             let resultStrings = elements.asStringArray()
             return resultStrings.joined(separator: separator)
         } else {
-            let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
+            let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
+            let elementString = cleanedScript.components(separatedBy: separator)
             elements = ExtensibleArray(elementString.map {Int($0)!})
 
-            // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
-            if noun != nil {
-                elements[1] = noun!
-            }
-            if verb != nil {
-                elements[2] = verb!
-            }
             elements = try execute(programme: elements)
 
             let resultStrings = elements.asStringArray()
@@ -107,44 +98,51 @@ class Computer {
     func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
         elements = programme
 
-        if finished == false {
-            mainloop: repeat {
-                let opcode = getOpcode()
-                parameterModes = getModes()
-                switch opcode {
-                case 1:
-                    try addition()
-                case 2:
-                    try multiplication()
-                case 3:
-                    if input == nil {
-                        break mainloop
-                    }
-                    try readInput()
-                case 4:
-                    try setOutput()
-                case 5:
-                    jumpIfTrue()
-                case 6:
-                    jumpIfFalse()
-                case 7:
-                    try lessThan()
-                case 8:
-                    try equals()
-                case 9:
-                    relativeBaseOffset()
-                case 99:
-                    finished = true
+        // Loops over each instruction, getting the opcodes and parameter modes from the instruction.  Then calls out
+        // to relevant function depending on opcode.  Parameter modes is an instance attribute to reduce duplication of
+        // passing as parameter to every single method.
+
+        // see opcode methods for description of each; and getModes for description of parameter modes.
+
+        // Note programme can modify itself.
+
+        mainloop: repeat {
+            let opcode = getOpcode()
+            parameterModes = getModes()
+            switch opcode {
+            case 1:
+                try addition()
+            case 2:
+                try multiplication()
+            case 3:
+                if input == nil {
                     break mainloop
-                default:
-                    throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
                 }
-            } while true
-        }
+                try readInput()
+            case 4:
+                try setOutput()
+            case 5:
+                try jumpIfTrue()
+            case 6:
+                try jumpIfFalse()
+            case 7:
+                try lessThan()
+            case 8:
+                try equals()
+            case 9:
+                try relativeBaseOffset()
+            case 99:
+                break mainloop
+            default:
+                throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
+            }
+        } while true
         return elements
     }
     // swiftlint:enable cyclomatic_complexity
+
     func addition() throws {
+        // Adds first two operands (after interpretation via parameter modes) and writes result to third operand.
         let operands = try getOperands(pointer: instructionPointer)
         // 0 for parameter mode of last parameter (parameter mdoes are rtl)
         try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand + operands.secondOperand
@@ -152,32 +150,35 @@ class Computer {
     }
 
     func multiplication() throws {
+        // Multiplies first two operands (after interpretation via parameter modes) and writes result to third operand.
         let operands = try getOperands(pointer: instructionPointer)
+        // 0 for parameter mode of last parameter (parameter mdoes are rtl)
         try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand * operands.secondOperand
         instructionPointer += 4
     }
 
     func readInput() throws {
-        if phaseUsed == false {
-            try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = phase!
-            instructionPointer += 2
-            phaseUsed = true
-        } else {
-            try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
-            instructionPointer += 2
-            input = nil
-        }
+        // Read only operand (after interpretation via parameter modes) into input instance property
+
+        // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
+        // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
+        try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
+        instructionPointer += 2
+        input = nil
     }
 
     func setOutput() throws {
+        // Write only operand (after interpretation via parameter modes) into output instance property
+
         // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
         // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
         output.append(try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)])
         instructionPointer += 2
     }
 
-    func jumpIfTrue() {
-        let operands = try! getOperands(pointer: instructionPointer)
+    func jumpIfTrue() throws {
+        // Jump (by setting instruction pointer) to second operand if first operand is non-zero
+        let operands = try getOperands(pointer: instructionPointer)
         if operands.firstOperand != 0 {
             instructionPointer = operands.secondOperand
         } else {
@@ -185,8 +186,9 @@ class Computer {
         }
     }
 
-    func jumpIfFalse() {
-        let operands = try! getOperands(pointer: instructionPointer)
+    func jumpIfFalse() throws {
+        // Jump (by setting instruction pointer) to second operand if first operand is zero
+        let operands = try getOperands(pointer: instructionPointer)
         if operands.firstOperand == 0 {
             instructionPointer = operands.secondOperand
         } else {
@@ -195,9 +197,10 @@ class Computer {
     }
 
     func equals() throws {
-        // equals
+        // After interpreting all operands via parameter modes, if first two operands are equal, write 1 to third
+        // operand.  Otherwise, write 0 to third operand.
         let result: Int
-        let operands = try! getOperands(pointer: instructionPointer)
+        let operands = try getOperands(pointer: instructionPointer)
         if operands.firstOperand == operands.secondOperand {
             result = 1
         } else {
@@ -207,9 +210,10 @@ class Computer {
         instructionPointer += 4
     }
 
-    func relativeBaseOffset() {
-        // swiftlint:disable force_try
-        let operands = try! getOperands(pointer: instructionPointer)
+    func relativeBaseOffset() throws {
+        // Add only operand (after interpretation via parameter modes) to relative base property (-ve offset values
+        // are allowed).
+        let operands = try getOperands(pointer: instructionPointer)
         relativeBase += operands.firstOperand
         instructionPointer += 2
     }
@@ -219,8 +223,10 @@ class Computer {
     }
 
     func lessThan() throws {
+        // After interpreting all operands via parameter modes, if first operands less than second, write 1 to third
+        // operand.  Otherwise, write 0 to third operand.
         let result: Int
-        let operands = try! getOperands(pointer: instructionPointer)
+        let operands = try getOperands(pointer: instructionPointer)
         if operands.firstOperand < operands.secondOperand {
             result = 1
         } else {
@@ -256,6 +262,12 @@ class Computer {
     }
 
     func getModes() -> [Int] {
+        // Parameter modes affect how the operands are interpreted.  If 1 (i.e. immediate mode), the value itself is
+        // used.  If 0 (i.e. position mode), the value at the memory address pointed to by the parameter is used.
+        // If 2 (i.e. relative mode), the value at the memory address pointed to by the
+        // (parameter + the relative base property) is used.
+
+        // Note parametermodes is rtl, and is zero padded to always be three values.
         let instruction = getInstruction()
         var modes: [Int]
         if instruction.digits.count > 2 {

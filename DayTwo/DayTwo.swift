@@ -18,6 +18,38 @@ See https://adventofcode.com/2019/day/2 for the details of the puzzle being solv
  */
 class DayTwoParser: Computer {
 
+    let noun: Int?
+    let verb: Int?
+
+    init (noun: Int? = nil, verb: Int? = nil) {
+        self.noun = noun
+        self.verb = verb
+        super.init()
+    }
+
+    override func parse(script: String = "") throws -> String {
+        if script == "" {
+            elements = try execute(programme: elements)
+            let resultStrings = elements.asStringArray()
+            return resultStrings.joined(separator: separator)
+        } else {
+            let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
+            let elementString = cleanedScript.components(separatedBy: separator)
+            elements = ExtensibleArray(elementString.map {Int($0)!})
+
+            // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
+            if noun != nil {
+                elements[1] = noun!
+            }
+            if verb != nil {
+                elements[2] = verb!
+            }
+            elements = try execute(programme: elements)
+
+            let resultStrings = elements.asStringArray()
+            return resultStrings.joined(separator: separator)
+        }
+    }
 }
 
 func part1(contents: String) throws -> String {

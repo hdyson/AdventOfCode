@@ -95,12 +95,78 @@ class Solver {
 }
 
 	class DaySevenParser: Computer {
+
+        var phase: Int?
+        var phaseUsed = false
+        var finished = false
+        var name: String
+
+        override init() {
+            name = "undefined"
+            super.init()
+        }
+
         override func setOutput() throws {
-            // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
-            // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
+            // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been
+            //  paddedwith initial zeros to handle 3 parameters.  So only the last value is freom the input data.
             output = [try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
             instructionPointer += 2
         }
+
+        override func readInput() throws {
+            if phaseUsed == false {
+                try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = phase!
+                instructionPointer += 2
+                phaseUsed = true
+            } else {
+                try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
+                instructionPointer += 2
+                input = nil
+            }
+        }
+        // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
+        // complexity further though.
+        // swiftlint:disable cyclomatic_complexity
+        override func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
+            elements = programme
+
+            if finished == false {
+                mainloop: repeat {
+                    let opcode = getOpcode()
+                    parameterModes = getModes()
+                    switch opcode {
+                    case 1:
+                        try addition()
+                    case 2:
+                        try multiplication()
+                    case 3:
+                        if input == nil {
+                            break mainloop
+                        }
+                        try readInput()
+                    case 4:
+                        try setOutput()
+                    case 5:
+                        try jumpIfTrue()
+                    case 6:
+                        try jumpIfFalse()
+                    case 7:
+                        try lessThan()
+                    case 8:
+                        try equals()
+                    case 9:
+                        try relativeBaseOffset()
+                    case 99:
+                        finished = true
+                        break mainloop
+                    default:
+                        throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
+                    }
+                } while true
+            }
+            return elements
+        }
+        // swiftlint:enable cyclomatic_complexity
 }
 
 func dayseven(contents: String) throws -> String {
