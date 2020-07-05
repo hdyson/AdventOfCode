@@ -16,71 +16,42 @@ enum ParseError: Error {
 }
 
 class ExtensibleArray {
-    // Necessary behaviour:
-    // 1. Initial values create a contiguous array
-    // 2. Access to value:
-    //     1. Check if position in any existing array
-    //         If not:
-    //              1. creates new array of N elements initialised to 0
-    //              2. Store start value and length of new array
-    //              3. Check new array not adjacent to existing array (if so, merge - non-zero value wins if overlap)
-    var backingStore = [[Int]]()
-    var backingStoreStartIndices = [Int]()
-    let newArraySize = 40  // Arbitrary - instruction up to 4 integers wide, so gives enough room for at least 10 instructions.
+
+    // A dict with an array-like interface.
+
+    var backingStore : [Int: Int] = [:]
 
     init (_ values: [Int]) {
-        backingStore.append(values)
-        backingStoreStartIndices.append(0)
+        for (index, value) in values.enumerated() {
+            backingStore[index] = value
+        }
     }
 
     init () {
-        backingStore.append([Int]())
-        backingStoreStartIndices.append(0)
     }
 
     subscript (index: Int) -> Int {
         // Swift magic method to implement [] syntax
         get {
-            var result : Int?
-            var valueFound = false
-            for arrayIndex in 0..<backingStore.count {
-                let arrayStart = backingStoreStartIndices[arrayIndex]
-                let arrayEnd = arrayStart + backingStore[arrayIndex].count
-                if arrayStart <= index && index <= arrayEnd {
-                    result = backingStore[arrayIndex][index - backingStoreStartIndices[arrayIndex]]
-                    valueFound = true
-                    break
-                }
-            }
-            if !valueFound {
-                growArray(index)
-                result = 0
-            }
-            return result ?? 0
+            var result : Int
+            result = backingStore[index, default: 0]
+            return result
         }
         set(newValue) {
-            if index < backingStore[0].count {
-                backingStore[0][index] = newValue
-            } else {
-                growArray(index)
-                let arrayIndex = backingStore.count - 1
-                backingStore[arrayIndex][index - backingStoreStartIndices[arrayIndex]] = newValue
-            }
+            backingStore[index] = newValue
         }
     }
 
-    func map (function: (Int) -> Int) -> [Int] {
-        return backingStore[0].map(function)
-    }
-
-    func map (function: (Int) -> String) -> [String] {
-        return backingStore[0].map(function)
-    }
-
-    func growArray(_ index: Int) {
-        backingStoreStartIndices.append(index)
-        let newArray = Array(repeating: 0, count: newArraySize)
-        backingStore.append(newArray)
+    func asStringArray () -> [String] {
+        var maxKey = 0
+        for key in backingStore.keys where key > maxKey {
+            maxKey = key
+        }
+        var result = Array(repeating: "0", count: maxKey + 1)
+        for (key, value) in backingStore {
+            result[key] = String(value)
+        }
+        return result
     }
 }
 
@@ -110,7 +81,7 @@ class Computer {
     func parse(script: String = "") throws -> String {
         if script == "" {
             elements = try execute(programme: elements)
-            let resultStrings = elements.map {String($0)}
+            let resultStrings = elements.asStringArray()
             return resultStrings.joined(separator: separator)
         } else {
             let elementString = script.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: separator)
@@ -125,7 +96,7 @@ class Computer {
             }
             elements = try execute(programme: elements)
 
-            let resultStrings = elements.map {String($0)}
+            let resultStrings = elements.asStringArray()
             return resultStrings.joined(separator: separator)
         }
     }
@@ -201,7 +172,7 @@ class Computer {
     func setOutput() throws {
         // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
         // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
-        output = [try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
+        output.append(try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)])
         instructionPointer += 2
     }
 

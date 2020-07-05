@@ -95,7 +95,12 @@ class Solver {
 }
 
 	class DaySevenParser: Computer {
-
+        override func setOutput() throws {
+            // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
+            // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
+            output = [try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
+            instructionPointer += 2
+        }
 }
 
 func dayseven(contents: String) throws -> String {
