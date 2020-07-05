@@ -15,6 +15,7 @@ class DayNineParser: Computer {
 func daynine(contents: String) throws -> String {
     let partOne = DayNineParser()
     partOne.input = 1
+    partOne.phaseUsed = true
     _ = try partOne.parse(script: contents)
     return "Part 1: \(partOne.output)"
 }

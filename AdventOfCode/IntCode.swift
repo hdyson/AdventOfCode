@@ -19,7 +19,7 @@ class ExtensibleArray {
 
     // A dict with an array-like interface.
 
-    var backingStore : [Int: Int] = [:]
+    var backingStore: [Int: Int] = [:]
 
     init (_ values: [Int]) {
         for (index, value) in values.enumerated() {
@@ -33,7 +33,7 @@ class ExtensibleArray {
     subscript (index: Int) -> Int {
         // Swift magic method to implement [] syntax
         get {
-            var result : Int
+            var result: Int
             result = backingStore[index, default: 0]
             return result
         }
@@ -203,7 +203,7 @@ class Computer {
         } else {
             result = 0
         }
-        try elements[getAddress(mode: parameterModes.removeLast(), offset: 3)] = result
+        try elements[getAddress(mode: parameterModes[0], offset: 3)] = result
         instructionPointer += 4
     }
 
@@ -233,7 +233,7 @@ class Computer {
     }
 
     func getResult() -> ExtensibleArray {
-        let result : ExtensibleArray
+        let result: ExtensibleArray
         if output.count != 0 {
             result = ExtensibleArray(output)
         } else {
