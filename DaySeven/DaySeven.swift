@@ -106,6 +106,23 @@ class Solver {
             super.init()
         }
 
+        override func parse(script: String = "") throws -> String {
+            if script == "" {
+                memory = try execute(programme: memory)
+                let resultStrings = memory.asStringArray()
+                return resultStrings.joined(separator: separator)
+            } else {
+                let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
+                let elementString = cleanedScript.components(separatedBy: separator)
+                memory = ExtensibleArray(elementString.map {Int($0)!})
+
+                memory = try execute(programme: memory)
+
+                let resultStrings = memory.asStringArray()
+                return resultStrings.joined(separator: separator)
+            }
+        }
+
         override func setOutput() throws {
             // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been
             //  paddedwith initial zeros to handle 3 parameters.  So only the last value is freom the input data.

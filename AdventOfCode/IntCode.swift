@@ -16,49 +16,6 @@ enum ParseError: Error {
     case invalidMode(name: String, mode: Int)
 }
 
-class ExtensibleArray {
-
-    // A dict with an array-like interface.  Enables changing the underlying storage model without needing to change
-    // every call.
-
-    var backingStore: [Int: Int] = [:]
-
-    init (_ values: [Int]) {
-        // Enables initialising from an array of Ints
-        for (index, value) in values.enumerated() {
-            backingStore[index] = value
-        }
-    }
-
-    init () {
-    }
-
-    subscript (index: Int) -> Int {
-        // Swift magic method to implement [] syntax
-        get {
-            var result: Int
-            result = backingStore[index, default: 0]  // 0 default from day 9 puzzle text.
-            return result
-        }
-        set(newValue) {
-            backingStore[index] = newValue
-        }
-    }
-
-    func asStringArray () -> [String] {
-        // Some days need output of storage array as a string.
-        var maxKey = 0
-        for key in backingStore.keys where key > maxKey {
-            maxKey = key
-        }
-        var result = Array(repeating: "0", count: maxKey + 1)
-        for (key, value) in backingStore {
-            result[key] = String(value)
-        }
-        return result
-    }
-}
-
 class Computer {
     let separator=","
 
@@ -73,23 +30,18 @@ class Computer {
         instructionPointer = 0
     }
 
-    func parse(script: String = "") throws -> String {
+    func parse(script: String) throws -> String {
 
-        // TODO: is the complexity here just for day 7?  Can this be moved to the day 7 subclass?
-        if script == "" {
-            memory = try execute(programme: memory)
-            let resultStrings = memory.asStringArray()
-            return resultStrings.joined(separator: separator)
-        } else {
-            let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
-            let elementString = cleanedScript.components(separatedBy: separator)
-            memory = ExtensibleArray(elementString.map {Int($0)!})
+        // Interprets script as instructions for IntCode computer
 
-            memory = try execute(programme: memory)
+        let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
+        let elementString = cleanedScript.components(separatedBy: separator)
+        memory = ExtensibleArray(elementString.map {Int($0)!})
 
-            let resultStrings = memory.asStringArray()
-            return resultStrings.joined(separator: separator)
-        }
+        memory = try execute(programme: memory)
+
+        let resultStrings = memory.asStringArray()
+        return resultStrings.joined(separator: separator)
     }
 
     // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
@@ -250,6 +202,7 @@ class Computer {
     }
 
     func getOpcode() -> Int {
+        // trailing 2 digits of instruction where there's 2 or more digits in the instruction are the opcode.  If only one digit in instruction, that's the opcode.
         let instruction = getInstruction()
         let digits = instruction.digits
         let units = digits[digits.count - 1]
@@ -285,7 +238,7 @@ class Computer {
 
     func getAddress(mode: Int, offset: Int) throws -> Int {
         // mode is integer from puzzle
-        // offset is number of addresses from mode/opcodes to operand - so 1 for first operand.
+        // offset is number of addresses from mode/opcodes to operand - so 1 for first operand, N for Nth operand.
         let modeNames: [Int: String] = [0: "position", 1: "immediate", 2: "relative"]
         let modeName = modeNames[mode]
 
