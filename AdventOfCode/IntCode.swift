@@ -153,7 +153,7 @@ class Computer {
 
     func multiplication() throws {
         let operands = try getOperands(pointer: instructionPointer)
-        try elements[getAddress(mode: parameterModes.removeLast(), offset: 3)] = operands.firstOperand * operands.secondOperand
+        try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand * operands.secondOperand
         instructionPointer += 4
     }
 
