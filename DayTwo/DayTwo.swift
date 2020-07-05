@@ -29,24 +29,24 @@ class DayTwoParser: Computer {
 
     override func parse(script: String = "") throws -> String {
         if script == "" {
-            elements = try execute(programme: elements)
-            let resultStrings = elements.asStringArray()
+            memory = try execute(programme: memory)
+            let resultStrings = memory.asStringArray()
             return resultStrings.joined(separator: separator)
         } else {
             let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
             let elementString = cleanedScript.components(separatedBy: separator)
-            elements = ExtensibleArray(elementString.map {Int($0)!})
+            memory = ExtensibleArray(elementString.map {Int($0)!})
 
             // 1202 fix (see puzzle text: https://adventofcode.com/2019/day/2 final paragraph):
             if noun != nil {
-                elements[1] = noun!
+                memory[1] = noun!
             }
             if verb != nil {
-                elements[2] = verb!
+                memory[2] = verb!
             }
-            elements = try execute(programme: elements)
+            memory = try execute(programme: memory)
 
-            let resultStrings = elements.asStringArray()
+            let resultStrings = memory.asStringArray()
             return resultStrings.joined(separator: separator)
         }
     }

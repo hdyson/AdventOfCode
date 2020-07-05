@@ -109,17 +109,17 @@ class Solver {
         override func setOutput() throws {
             // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been
             //  paddedwith initial zeros to handle 3 parameters.  So only the last value is freom the input data.
-            output = [try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
+            output = [try memory[getAddress(mode: parameterModes.removeLast(), offset: 1)]]
             instructionPointer += 2
         }
 
         override func readInput() throws {
             if phaseUsed == false {
-                try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = phase!
+                try memory[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = phase!
                 instructionPointer += 2
                 phaseUsed = true
             } else {
-                try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
+                try memory[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
                 instructionPointer += 2
                 input = nil
             }
@@ -128,7 +128,7 @@ class Solver {
         // complexity further though.
         // swiftlint:disable cyclomatic_complexity
         override func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
-            elements = programme
+            memory = programme
 
             if finished == false {
                 mainloop: repeat {
@@ -160,11 +160,11 @@ class Solver {
                         finished = true
                         break mainloop
                     default:
-                        throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
+                        throw ParseError.invalidOpcode(opcode: memory[instructionPointer])
                     }
                 } while true
             }
-            return elements
+            return memory
         }
         // swiftlint:enable cyclomatic_complexity
 }

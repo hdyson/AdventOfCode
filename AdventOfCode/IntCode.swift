@@ -62,7 +62,7 @@ class ExtensibleArray {
 class Computer {
     let separator=","
 
-    var elements = ExtensibleArray()
+    var memory = ExtensibleArray()
     var instructionPointer = 0
     var input: Int?
     var output = [Int]()
@@ -77,17 +77,17 @@ class Computer {
 
         // TODO: is the complexity here just for day 7?  Can this be moved to the day 7 subclass?
         if script == "" {
-            elements = try execute(programme: elements)
-            let resultStrings = elements.asStringArray()
+            memory = try execute(programme: memory)
+            let resultStrings = memory.asStringArray()
             return resultStrings.joined(separator: separator)
         } else {
             let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
             let elementString = cleanedScript.components(separatedBy: separator)
-            elements = ExtensibleArray(elementString.map {Int($0)!})
+            memory = ExtensibleArray(elementString.map {Int($0)!})
 
-            elements = try execute(programme: elements)
+            memory = try execute(programme: memory)
 
-            let resultStrings = elements.asStringArray()
+            let resultStrings = memory.asStringArray()
             return resultStrings.joined(separator: separator)
         }
     }
@@ -96,7 +96,7 @@ class Computer {
     // complexity further though.
     // swiftlint:disable cyclomatic_complexity
     func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
-        elements = programme
+        memory = programme
 
         // Loops over each instruction, getting the opcodes and parameter modes from the instruction.  Then calls out
         // to relevant function depending on opcode.  Parameter modes is an instance attribute to reduce duplication of
@@ -134,10 +134,10 @@ class Computer {
             case 99:
                 break mainloop
             default:
-                throw ParseError.invalidOpcode(opcode: elements[instructionPointer])
+                throw ParseError.invalidOpcode(opcode: memory[instructionPointer])
             }
         } while true
-        return elements
+        return memory
     }
     // swiftlint:enable cyclomatic_complexity
 
@@ -145,7 +145,7 @@ class Computer {
         // Adds first two operands (after interpretation via parameter modes) and writes result to third operand.
         let operands = try getOperands(pointer: instructionPointer)
         // 0 for parameter mode of last parameter (parameter mdoes are rtl)
-        try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand + operands.secondOperand
+        try memory[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand + operands.secondOperand
         instructionPointer += 4
     }
 
@@ -153,7 +153,7 @@ class Computer {
         // Multiplies first two operands (after interpretation via parameter modes) and writes result to third operand.
         let operands = try getOperands(pointer: instructionPointer)
         // 0 for parameter mode of last parameter (parameter mdoes are rtl)
-        try elements[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand * operands.secondOperand
+        try memory[getAddress(mode: parameterModes[0], offset: 3)] = operands.firstOperand * operands.secondOperand
         instructionPointer += 4
     }
 
@@ -162,7 +162,7 @@ class Computer {
 
         // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
         // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
-        try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
+        try memory[getAddress(mode: parameterModes.removeLast(), offset: 1)]  = input!
         instructionPointer += 2
         input = nil
     }
@@ -172,7 +172,7 @@ class Computer {
 
         // Why last element of parameter modes here?  Only one parameter for output, but parameter modes has been padded
         // with initial zeros to handle 3 parameters.  So only the last value is freom the input data.
-        output.append(try elements[getAddress(mode: parameterModes.removeLast(), offset: 1)])
+        output.append(try memory[getAddress(mode: parameterModes.removeLast(), offset: 1)])
         instructionPointer += 2
     }
 
@@ -206,7 +206,7 @@ class Computer {
         } else {
             result = 0
         }
-        try elements[getAddress(mode: parameterModes[0], offset: 3)] = result
+        try memory[getAddress(mode: parameterModes[0], offset: 3)] = result
         instructionPointer += 4
     }
 
@@ -219,7 +219,7 @@ class Computer {
     }
 
     func getInstruction() -> Int {
-        return elements[instructionPointer]
+        return memory[instructionPointer]
     }
 
     func lessThan() throws {
@@ -234,7 +234,7 @@ class Computer {
         }
         // 0 for parameter mode of last parameter (parameter mdoes are rtl)
         let address = try getAddress(mode: parameterModes[0], offset: 3)
-        elements[address] = result
+        memory[address] = result
         instructionPointer += 4
     }
 
@@ -244,7 +244,7 @@ class Computer {
             result = ExtensibleArray(output)
         } else {
             // preserve day 2 behaviour
-            result = elements
+            result = memory
         }
         return result
     }
@@ -292,11 +292,11 @@ class Computer {
         let address: Int
         switch modeName {
         case "position":
-            address = elements[instructionPointer + offset]
+            address = memory[instructionPointer + offset]
         case "immediate":
             address = instructionPointer + offset
         case "relative":
-            address = elements[instructionPointer + offset] + relativeBase
+            address = memory[instructionPointer + offset] + relativeBase
         default:
             throw ParseError.invalidMode(name: modeName ?? "", mode: mode)
         }
@@ -308,8 +308,8 @@ class Computer {
         let secondOperand: Int
 
         // As per puzzle text, parameter modes are rtl while instructions are ltr.
-        firstOperand = try elements[getAddress(mode: parameterModes[2], offset: 1)]
-        secondOperand = try elements[getAddress(mode: parameterModes[1], offset: 2)]
+        firstOperand = try memory[getAddress(mode: parameterModes[2], offset: 1)]
+        secondOperand = try memory[getAddress(mode: parameterModes[1], offset: 2)]
         return(firstOperand, secondOperand)
     }
 }

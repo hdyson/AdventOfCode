@@ -106,7 +106,7 @@ class TestDayFivePartTwo: XCTestCase {
 
 class DayFiveParserMock: DayFiveParser {
     func setInstruction(instruction: Int) {
-        elements = ExtensibleArray([instruction])
+        memory = ExtensibleArray([instruction])
         instructionPointer = 0
     }
 }
