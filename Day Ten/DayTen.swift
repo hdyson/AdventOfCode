@@ -8,12 +8,16 @@
 
 import Foundation
 
+enum DayTenError: Error {
+    case invalidInput(input: Character)
+}
+
 class DayTenSolver {
 
-    var map: [[Int]]
+    var map: [[Character]]
 
     init(data: String) {
-        map = parseInput(data)
+        map = try! parseInput(data)
     }
 
     func solve () {
@@ -22,8 +26,28 @@ class DayTenSolver {
 
 }
 
-func parseInput(_ input: String) -> [[Int]]{
-    return [[0]]
+func parseInput(_ input: String) throws -> [[Character]]{
+
+    var result = [[Character]]()
+    var row = 0
+    var column = 0
+    result.append([Character]())
+
+    for character in input {
+        switch character {
+        case ".", "#":
+            result[row].append(character)
+            column += 1
+        case "\n":
+            result.append([Character]())
+            column = 0
+            row += 1
+        default:
+            throw DayTenError.invalidInput(input: character)
+        }
+    }
+
+    return result
 }
 
 func dayten(contents: String) throws -> String {
