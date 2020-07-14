@@ -12,12 +12,21 @@ enum DayTenError: Error {
     case invalidInput(input: Character)
 }
 
+struct Asteroid : Equatable {
+    let x : Int
+    let y : Int
+
+    static func == (left: Asteroid, right: Asteroid) -> Bool {
+        return (left.x == right.x) && (left.y == right.y)
+    }
+}
+
 class DayTenSolver {
 
-    var map: [[Character]]
+    var asteroids: [Asteroid]
 
     init(data: String) {
-        map = try! parseInput(data)
+        asteroids = try! parseInput(data)
     }
 
     func solve () {
@@ -26,20 +35,19 @@ class DayTenSolver {
 
 }
 
-func parseInput(_ input: String) throws -> [[Character]]{
+func parseInput(_ input: String) throws -> [Asteroid] {
 
-    var result = [[Character]]()
+    var result = [Asteroid]()
     var row = 0
     var column = 0
-    result.append([Character]())
 
     for character in input {
         switch character {
-        case ".", "#":
-            result[row].append(character)
+        case ".":
             column += 1
+        case "#":
+            result.append(Asteroid(x: column, y: row))
         case "\n":
-            result.append([Character]())
             column = 0
             row += 1
         default:

@@ -11,16 +11,13 @@ import XCTest
 class DayTenTests: XCTestCase {
 
     func testParseInput() throws {
-        let expected: [[Character]] = [[".", "#"], [".", "."]]
-
+        let expected = [Asteroid(x: 1, y: 0), Asteroid(x: 1, y: 1)]
         let input = """
         .#
-        ..
+        .#
         """
         let actual = try! parseInput(input)
 
         XCTAssertEqual(actual, expected)
     }
-
-
 }
