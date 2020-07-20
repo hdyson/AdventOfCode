@@ -10,7 +10,7 @@
 // swiftlint:disable identifier_name
 import XCTest
 
-class DayTenTests: XCTestCase {
+class DayTenPartOneTests: XCTestCase {
 
     func testParseInput() throws {
         let expected = [Asteroid(x: 1, y: 0), Asteroid(x: 1, y: 1)]
@@ -108,7 +108,7 @@ class DayTenTests: XCTestCase {
         ##...#..#.
         .#....####
         """
-        let actual = DayTenSolver(data: data).solve()
+        let actual = DayTenSolver(data: data).solvePartOne()
 
         XCTAssertEqual(actual, expected)
     }
@@ -138,7 +138,55 @@ class DayTenTests: XCTestCase {
         #.#.#.#####.####.###
         ###.##.####.##.#..##
         """
-        let actual = DayTenSolver(data: data).solve()
+        let actual = DayTenSolver(data: data).solvePartOne()
+
+        XCTAssertEqual(actual, expected)
+    }
+}
+
+class DayTenPartTwoTests: XCTestCase {
+
+    func testFindDistance() {
+        let expected = 5.0
+
+        let origin = Asteroid(x: 1, y: 1)
+        let destination = Asteroid(x: 4, y: 5)
+        let actual = findDistance(origin, destination)
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testFind200thASteroidNoOcclusion() {
+        // Testcase: line of 210 asteroids, with constant y coordinate and increasing x coordinate.
+        // Ensures 200th element of the array should be the 200th when cycling clockwise.
+        var asteroids = [Asteroid]()
+        let maxAngle = 210
+        for x in 0...maxAngle {
+            asteroids.append(Asteroid(x: maxAngle - x, y: 0))
+        }
+        let expected = asteroids[10]  // Created asteroid array in descending order
+
+        let origin = Asteroid(x: 0, y: 10)
+        let actual = find200thAsteroid(origin: origin, asteroids: asteroids)
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testFind200thASteroidWithOcclusion() {
+        // Testcase: in addition to previous test case, add some extra asteroids in line at 0 degrees.
+        var asteroids = [Asteroid]()
+        let maxAngle = 210
+        for x in 0...maxAngle {
+            asteroids.append(Asteroid(x: maxAngle - x, y: 0))
+        }
+        //19th asteroid will be bumped up to 200 when the following 9 are added and array is sorted.
+        let expected = asteroids[19]
+        for y in 1...9 {
+            asteroids.append(Asteroid(x: 0, y: y))
+        }
+
+        let origin = Asteroid(x: 0, y: 10)
+        let actual = find200thAsteroid(origin: origin, asteroids: asteroids)
 
         XCTAssertEqual(actual, expected)
     }

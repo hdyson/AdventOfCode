@@ -202,7 +202,8 @@ class Computer {
     }
 
     func getOpcode() -> Int {
-        // trailing 2 digits of instruction where there's 2 or more digits in the instruction are the opcode.  If only one digit in instruction, that's the opcode.
+        // trailing 2 digits of instruction where there's 2 or more digits in the instruction are the
+        // opcode.  If only one digit in instruction, that's the opcode.
         let instruction = getInstruction()
         let digits = instruction.digits
         let units = digits[digits.count - 1]
