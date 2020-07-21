@@ -146,6 +146,29 @@ class DayTenPartOneTests: XCTestCase {
 
 class DayTenPartTwoTests: XCTestCase {
 
+    let data = """
+    .#..##.###...#######
+    ##.############..##.
+    .#.######.########.#
+    .###.#######.####.#.
+    #####.##.#.##.###.##
+    ..#####..#.#########
+    ####################
+    #.####....###.#.#.##
+    ##.#################
+    #####.##.###..####..
+    ..######..##.#######
+    ####.##.####...##..#
+    .#####..#.######.###
+    ##...#.##########...
+    #.##########.#######
+    .####.#.###.###.#.##
+    ....##.##.###..#####
+    .#.#.###########.###
+    #.#.#.#####.####.###
+    ###.##.####.##.#..##
+    """
+
     func testFindDistance() {
         let expected = 5.0
 
@@ -156,37 +179,34 @@ class DayTenPartTwoTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
-    func testFind200thASteroidNoOcclusion() {
-        // Testcase: line of 210 asteroids, with constant y coordinate and increasing x coordinate.
-        // Ensures 200th element of the array should be the 200th when cycling clockwise.
-        var asteroids = [Asteroid]()
-        let maxAngle = 210
-        for x in 0...maxAngle {
-            asteroids.append(Asteroid(x: maxAngle - x, y: 0))
-        }
-        let expected = asteroids[10]  // Created asteroid array in descending order
+    func testExample1() {
+        let expected = 11 * 100 + 12
 
-        let origin = Asteroid(x: 0, y: 10)
-        let actual = find200thAsteroid(origin: origin, asteroids: asteroids)
+        let actual = DayTenSolver(data: data).solvePartTwo(count: 1)
 
         XCTAssertEqual(actual, expected)
     }
 
-    func testFind200thASteroidWithOcclusion() {
-        // Testcase: in addition to previous test case, add some extra asteroids in line at 0 degrees.
-        var asteroids = [Asteroid]()
-        let maxAngle = 210
-        for x in 0...maxAngle {
-            asteroids.append(Asteroid(x: maxAngle - x, y: 0))
-        }
-        //19th asteroid will be bumped up to 200 when the following 9 are added and array is sorted.
-        let expected = asteroids[19]
-        for y in 1...9 {
-            asteroids.append(Asteroid(x: 0, y: y))
-        }
+    func testExample10() {
+        let expected = 12 * 100 + 8
 
-        let origin = Asteroid(x: 0, y: 10)
-        let actual = find200thAsteroid(origin: origin, asteroids: asteroids)
+        let actual = DayTenSolver(data: data).solvePartTwo(count: 10)
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testExample100() {
+        let expected = 10 * 100 + 16
+
+        let actual = DayTenSolver(data: data).solvePartTwo(count: 100)
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testExample200() {
+        let expected = 8 * 100 + 2
+
+        let actual = DayTenSolver(data: data).solvePartTwo(count: 200)
 
         XCTAssertEqual(actual, expected)
     }

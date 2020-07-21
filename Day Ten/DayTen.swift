@@ -13,13 +13,18 @@ enum DayTenError: Error {
     case invalidInput(input: Character)
 }
 
-struct Asteroid: Equatable, Comparable {
+class Asteroid: Equatable, Comparable {
     // swiftlint:disable identifier_name
     let x: Int
     let y: Int
     // swiftlint:enable identifier_name
     var angle = 0.0
     var distance = 0.0
+
+    init(x xPosition: Int, y yPosition: Int) {
+        x = xPosition
+        y = yPosition
+    }
 
     static func == (left: Asteroid, right: Asteroid) -> Bool {
         return (left.x == right.x) && (left.y == right.y)
@@ -33,12 +38,12 @@ struct Asteroid: Equatable, Comparable {
     }
 
     static func < (left: Asteroid, right: Asteroid) -> Bool {
-        var result = true
+        var result = false
         if left.angle < right.angle {
-            result = false
+            result = true
         } else if left.angle == right.angle {
             if left.distance < right.distance {
-                result = false
+                result = true
             }
         }
         return result
@@ -59,11 +64,21 @@ class DayTenSolver {
         return maximumAsteroidCount
     }
 
-    func solvePartTwo() -> Int {
+    func solvePartTwo(count: Int = 200) -> Int {
         maximumAsteroidCount = 0
         let origin = findAsteroidWithBestVisibility()
+        var originIndex = -1  // Will create runtime error if origin isn't found in asteroids
+        for (index, asteroid) in asteroids.enumerated() {
+            asteroid.angle = findAngle(origin, asteroid)
+            asteroid.distance = findDistance(origin, asteroid)
+            if asteroid == origin {
+                originIndex = index
+            }
+        }
+        asteroids.remove(at: originIndex)
+        asteroids.sort()
 
-        let asteroid = find200thAsteroid(origin: origin, asteroids: asteroids)
+        let asteroid = findNthAsteroid(origin: origin, asteroids: asteroids, n: count)
 
         // Hardcoded values from puzzle text
         let result =  100 * asteroid.x + asteroid.y
@@ -137,14 +152,32 @@ func visibleAsteroidCount(origin: Asteroid, asteroids: [Asteroid]) -> Int {
     return result.count
 }
 
-func find200thAsteroid(origin: Asteroid, asteroids asteroidsParameter: [Asteroid]) -> Asteroid {
+// swiftlint:disable identifier_name
+func findNthAsteroid(origin: Asteroid, asteroids asteroidsParameter: [Asteroid], n: Int=200) -> Asteroid {
+    // swiftlint:enable identifier_name
     var asteroids = asteroidsParameter
-    for var asteroid in asteroids {
-        asteroid.angle = findAngle(origin, asteroid)
-        asteroid.distance = findDistance(origin, asteroid)
+    var resultIndex: Int
+    var result: Asteroid?
+
+    // Sort isn't sufficient - if there's two asteroids on same angle, we vapourise the first then
+    // move to the next angle.
+    var angles = Set<Double>()
+    for asteroid in asteroids {
+        angles.insert(asteroid.angle)
     }
-    asteroids.sort()
-    return asteroids[200]
+    let searchAngles = angles.sorted()
+    var count = 0
+    scan: repeat {
+        for searchAngle in searchAngles {
+            resultIndex = asteroids.firstIndex(where: {$0.angle == searchAngle})!
+            result = asteroids.remove(at: resultIndex)
+            count += 1
+            if count >= n {
+                break scan
+            }
+        }
+    } while true
+    return result!
 }
 
 func dayten(contents: String) throws -> String {
