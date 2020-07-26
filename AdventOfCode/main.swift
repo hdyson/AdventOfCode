@@ -30,4 +30,5 @@ for (index, filename) in filenames.enumerated() {
 //print("Day seven: ", try dayseven(contents: sourceData[7]!))
 //print("Day eight: ", try dayeight(contents: sourceData[8]!))
 //print("Day nine: ", try daynine(contents: sourceData[9]!))
-print("Day ten: ", try dayten(contents: sourceData[10]!))
+//print("Day ten: ", try dayten(contents: sourceData[10]!))
+print("Day eleven: ", try dayeleven(contents: sourceData[11]!))
