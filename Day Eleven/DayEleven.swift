@@ -33,6 +33,10 @@ struct DayElevenSolver {
     }
 }
 
+enum RobotError: Error {
+    case invalidDirection(direction: Int)
+}
+
 class Robot {
     var x: Int
     var y: Int
@@ -58,8 +62,20 @@ class Robot {
         }
     }
 
-    func move() {
-        
+    func move() throws {
+        switch direction {
+        case 0:
+            y += 1
+        case 1:
+            x += 1
+        case 2:
+            y -= 1
+        case 3:
+            x -= 1
+        default:
+            throw RobotError.invalidDirection(direction: direction)
+        }
+
     }
 }
 

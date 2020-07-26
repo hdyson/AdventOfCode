@@ -87,68 +87,74 @@ class RobotTests: XCTestCase {
     }
 
     // No tuple equality in swift, so need tests for x and y separtely:
-    func testMoveUpX() {
+    func testMoveUpX() throws {
         let expected = 0
 
-        robot.move()
+        try robot.move()
         let actual = robot.x
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveRightX() {
+    func testMoveRightX() throws {
         let expected = 1
 
-        robot.move()
+        robot.direction = 1
+        try robot.move()
         let actual = robot.x
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveDownX() {
+    func testMoveDownX() throws {
         let expected = 0
 
-        robot.move()
+        robot.direction = 2
+        try robot.move()
         let actual = robot.x
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveLeftX() {
+    func testMoveLeftX() throws {
         let expected = -1
 
-        robot.move()
+        robot.direction = 3
+        try robot.move()
         let actual = robot.x
 
         XCTAssertEqual(actual, expected)
     }
 
-    func testMoveUpY() {
+    func testMoveUpY() throws {
         let expected = 1
 
-        robot.move()
-        let actual = robot.x
+        try robot.move()
+        let actual = robot.y
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveRightY() {
+    func testMoveRightY() throws {
         let expected = 0
 
-        robot.move()
-        let actual = robot.x
+        robot.direction = 1
+        try robot.move()
+        let actual = robot.y
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveDownY() {
+    func testMoveDownY() throws {
         let expected = -1
 
-        robot.move()
-        let actual = robot.x
+        robot.direction = 2
+        try robot.move()
+        let actual = robot.y
 
         XCTAssertEqual(actual, expected)
     }
-    func testMoveLeftY() {
+    func testMoveLeftY() throws {
         let expected = 0
 
-        robot.move()
-        let actual = robot.x
+        robot.direction = 3
+        try robot.move()
+        let actual = robot.y
 
         XCTAssertEqual(actual, expected)
     }
