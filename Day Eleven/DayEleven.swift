@@ -57,6 +57,10 @@ class Robot {
             direction = 0
         }
     }
+
+    func move() {
+        
+    }
 }
 
 func dayeleven(contents: String) throws -> String {
