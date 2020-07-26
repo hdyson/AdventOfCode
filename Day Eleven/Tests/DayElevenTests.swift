@@ -86,7 +86,7 @@ class RobotTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
-    // No tuple equality in swift, so need tests for x and y separtely:
+    // No tuple equality in swift, so need tests for x and y separately:
     func testMoveUpX() throws {
         let expected = 0
 

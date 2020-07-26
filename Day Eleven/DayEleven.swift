@@ -38,8 +38,11 @@ enum RobotError: Error {
 }
 
 class Robot {
+    // We really do mean "x" and "y" for the point locations, so disable linter for those names:
+    // swiftlint:disable identifier_name
     var x: Int
     var y: Int
+    // swiftlint:enable identifier_name
     var direction: Int  // 0 => up, 1 => right, 2 => down, 3 => left
 
     init(x xParameter: Int=0, y yParameter: Int=0, direction directionParameter: Int=0) {
