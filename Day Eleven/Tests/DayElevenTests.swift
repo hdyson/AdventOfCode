@@ -8,26 +8,81 @@
 
 import XCTest
 
-class DayElevenTests: XCTestCase {
+class DayElevenPartOneTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+}
+
+class RobotTests: XCTestCase {
+
+    let robot = Robot(x: 0, y: 0, direction: 0)
+
+    func testChangeDirectionUpToRight() {
+        let expected = 1
+        robot.changeDirection(1)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testChangeDirectionRightToDown() {
+        let expected = 2
+        robot.direction = 1
+        robot.changeDirection(1)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testChangeDirectionDownToLeft() {
+        let expected = 3
+        robot.direction = 2
+        robot.changeDirection(1)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testChangeDirectionLeftToUp() {
+        let expected = 0
+        robot.direction = 3
+        robot.changeDirection(1)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
     }
 
+    func testChangeDirectionUpToLeft() {
+        let expected = 3
+        robot.changeDirection(0)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testChangeDirectionRightToUp() {
+        let expected = 0
+        robot.direction = 1
+        robot.changeDirection(0)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testChangeDirectionDownToRight() {
+        let expected = 1
+        robot.direction = 2
+        robot.changeDirection(0)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testChangeDirectionLeftToDown() {
+        let expected = 2
+        robot.direction = 3
+        robot.changeDirection(0)
+        let actual = robot.direction
+
+        XCTAssertEqual(actual, expected)
+    }
 }
