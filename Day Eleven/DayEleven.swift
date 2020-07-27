@@ -37,6 +37,17 @@ struct DayElevenSolver {
     }
 
     func solvePartTwo() {
+        // Requirements:
+        // 1. Start on white panel
+        // 2. Will draw eight capital letters
+        let robot = Robot(data)
+        robot.panel.set(Point(x: 0, y: 0), 1)
+        do {
+            try robot.run()
+        } catch {
+            print("Something went wrong")
+        }
+        robot.panel.printCurrentState()
     }
 }
 
@@ -145,6 +156,39 @@ class Panel {
         return result
     }
 
+    func printCurrentState() {
+        // start point is 0,0
+        var xmin=0
+        var xmax=0
+        var ymin=0
+        var ymax=0
+
+        for point in whitePoints {
+            if point.x < xmin {
+                xmin = point.x
+            } else if point.x > xmax {
+                xmax = point.x
+            }
+
+            if point.y < ymin {
+                ymin = point.y
+            } else if point.y > ymax {
+                ymax = point.y
+            }
+        }
+
+        // Empirically, output is upside down so need to reverse y coordinate.
+        for yPosition in (ymin...ymax).reversed() {
+            for xPosition in xmin...xmax {
+                if whitePoints.contains(Point(x: xPosition, y: yPosition)) {
+                    print("#", terminator: "")
+                } else {
+                    print(" ", terminator: "")
+                }
+            }
+            print("\n", terminator: "")
+        }
+    }
 }
 
 func dayeleven(contents: String) throws -> String {
