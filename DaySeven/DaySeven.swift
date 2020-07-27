@@ -98,7 +98,6 @@ class Solver {
 
         var phase: Int?
         var phaseUsed = false
-        var finished = false
         var name: String
 
         override init() {

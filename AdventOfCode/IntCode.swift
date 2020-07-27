@@ -25,6 +25,7 @@ class Computer {
     var output = [Int]()
     var relativeBase = 0  // Added day 9
     var parameterModes = [Int]()
+    var finished = false  // Added day 7, needed for 11 too
 
     init () {
         instructionPointer = 0
@@ -47,9 +48,7 @@ class Computer {
     // `execute` has cyclomatic_complexity of 11; default swiftlint limit is 10.  Don't see a good way to reduce
     // complexity further though.
     // swiftlint:disable cyclomatic_complexity
-    func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
-        memory = programme
-
+    func execute() throws -> ExtensibleArray {
         // Loops over each instruction, getting the opcodes and parameter modes from the instruction.  Then calls out
         // to relevant function depending on opcode.  Parameter modes is an instance attribute to reduce duplication of
         // passing as parameter to every single method.
@@ -84,6 +83,7 @@ class Computer {
             case 9:
                 try relativeBaseOffset()
             case 99:
+                finished = true  // Days 7 and 11 need this
                 break mainloop
             default:
                 throw ParseError.invalidOpcode(opcode: memory[instructionPointer])
@@ -91,7 +91,11 @@ class Computer {
         } while true
         return memory
     }
-    // swiftlint:enable cyclomatic_complexity
+
+    func execute(programme: ExtensibleArray) throws -> ExtensibleArray {
+        memory = programme
+        return try execute()
+    }
 
     func addition() throws {
         // Adds first two operands (after interpretation via parameter modes) and writes result to third operand.

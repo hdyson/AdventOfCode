@@ -95,6 +95,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveRightX() throws {
         let expected = 1
 
@@ -104,6 +105,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveDownX() throws {
         let expected = 0
 
@@ -113,6 +115,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveLeftX() throws {
         let expected = -1
 
@@ -131,6 +134,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveRightY() throws {
         let expected = 0
 
@@ -140,6 +144,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveDownY() throws {
         let expected = -1
 
@@ -149,6 +154,7 @@ class RobotTests: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
     func testMoveLeftY() throws {
         let expected = 0
 
@@ -159,4 +165,69 @@ class RobotTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    func testMoveLeftTwiceX() throws {
+        let expected = -2
+
+        robot.direction = 3
+        try robot.move()
+        try robot.move()
+        let actual = robot.x
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testMoveLeftTwiceY() throws {
+        let expected = 0
+
+        robot.direction = 3
+        try robot.move()
+        try robot.move()
+        let actual = robot.y
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testMoveRightTwiceX() throws {
+        let expected = 2
+
+        robot.direction = 1
+        try robot.move()
+        try robot.move()
+        let actual = robot.x
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testMoveRightTwiceY() throws {
+        let expected = 0
+
+        robot.direction = 1
+        try robot.move()
+        try robot.move()
+        let actual = robot.y
+
+        XCTAssertEqual(actual, expected)
+    }
+}
+
+class PanelTests: XCTestCase {
+
+    let panel = Panel()
+
+    func testUninitialisedValue() {
+        let expected = 0
+
+        let actual = panel.get(Point(x: 1, y: 1))
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testInitialisedValue() {
+        let expected = 1
+
+        panel.set(Point(x: 0, y: 0), 1)
+        let actual = panel.get(Point(x: 0, y: 0))
+
+        XCTAssertEqual(actual, expected)
+    }
 }
