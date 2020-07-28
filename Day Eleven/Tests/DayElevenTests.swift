@@ -14,7 +14,7 @@ class DayElevenPartOneTests: XCTestCase {
 
 class RobotTests: XCTestCase {
 
-    let robot = Robot(x: 0, y: 0, direction: 0)
+    let robot = Robot(x: 0, y: 0, direction: 0, "1,1")
 
     func testChangeDirectionUpToRight() {
         let expected = 1

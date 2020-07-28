@@ -8,26 +8,25 @@
 
 import XCTest
 
-class DayTwelveTests: XCTestCase {
+class constructMoon: XCTestCase {
+
+    var moons=[Moon]()
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let input = """
+            <x=0, y=6, z=1>
+            <x=4, y=4, z=19>
+            <x=-11, y=1, z=8>
+            <x=2, y=19, z=15>
+            """
+        moons = constructMoons(input: input)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    func testNumberOfMoons() throws {
+        let expected = 4
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        let actual = moons.count
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        XCTAssertEqual(actual, expected)
     }
-
 }
