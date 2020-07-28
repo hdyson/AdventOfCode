@@ -29,4 +29,28 @@ class constructMoon: XCTestCase {
 
         XCTAssertEqual(actual, expected)
     }
+
+    func testSecondMoonX() {
+        let expected = 4
+
+        let actual = moons[1].position.x
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testSecondMoonY() {
+        let expected = 4
+
+        let actual = moons[1].position.y
+
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testSecondMoonZ() {
+        let expected = 19
+
+        let actual = moons[1].position.z
+
+        XCTAssertEqual(actual, expected)
+    }
 }

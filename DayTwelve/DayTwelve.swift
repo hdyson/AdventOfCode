@@ -46,8 +46,18 @@ struct Moon {
 
 func constructMoons(input: String) -> [Moon] {
     var moons = [Moon]()
-    for _ in input.components(separatedBy: "\n") {
-        moons.append(Moon(position: Position(x: 0, y: 0, z: 0)))
+    for line in input.components(separatedBy: "\n") {
+        let components = line.components(separatedBy: ", ")
+        // Don't know width of number we're after, but do know widths of boilerplate surrounding values of
+        // interest.  So rather than pick out values, delete boilerplate.
+        var x = components[0]
+        x.removeFirst(3)
+        var y = components[1]
+        y.removeFirst(2)
+        var z = components[2]
+        z.removeFirst(2)
+        z.removeLast(1)
+        moons.append(Moon(position: Position(x: Int(x)!, y: Int(y)!, z: Int(z)!)))
     }
     return moons
 }
