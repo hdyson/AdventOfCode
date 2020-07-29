@@ -34,10 +34,97 @@ struct DayTwelveSolver {
         return energy
     }
 
-    func solvePartTwo() -> Int {
-        return 0
+    func solvePartTwo() throws -> Int {
+        // Requirements
+        // 1. Find how many steps would be needed for all moons to have the same position and velocity as
+        // the initial state.
+        var xPeriod: Int?
+        var yPeriod: Int?
+        var zPeriod: Int?
+        var initialXPositions = [Int]()
+        var initialXVelocities = [Int]()
+        var initialYPositions = [Int]()
+        var initialYVelocities = [Int]()
+        var initialZPositions = [Int]()
+        var initialZVelocities = [Int]()
+        var timesteps = 1
+
+        let moons = constructMoons(input: data)
+        for moon in moons {
+            initialXPositions.append(moon.position.x)
+            initialYPositions.append(moon.position.y)
+            initialZPositions.append(moon.position.z)
+            initialXVelocities.append(moon.velocity.x)
+            initialYVelocities.append(moon.velocity.y)
+            initialZVelocities.append(moon.velocity.z)
+        }
+        for moon in moons {
+            moon.applyGravity(moons: moons)
+        }
+        for moon in moons {
+            moon.applyVelocity()
+        }
+
+        repeat {
+            var currentXPositions = [Int]()
+            var currentXVelocities = [Int]()
+            var currentYPositions = [Int]()
+            var currentYVelocities = [Int]()
+            var currentZPositions = [Int]()
+            var currentZVelocities = [Int]()
+            for moon in moons {
+                currentXPositions.append(moon.position.x)
+                currentYPositions.append(moon.position.y)
+                currentZPositions.append(moon.position.z)
+                currentXVelocities.append(moon.velocity.x)
+                currentYVelocities.append(moon.velocity.y)
+                currentZVelocities.append(moon.velocity.z)
+            }
+            if currentXPositions == initialXPositions && currentXVelocities == initialXVelocities {
+                xPeriod = timesteps
+            }
+            if currentYPositions == initialYPositions && currentYVelocities == initialYVelocities {
+                yPeriod = timesteps
+            }
+            if currentZPositions == initialZPositions && currentZVelocities == initialZVelocities {
+                zPeriod = timesteps
+            }
+            for moon in moons {
+                moon.applyGravity(moons: moons)
+            }
+            for moon in moons {
+                moon.applyVelocity()
+            }
+            timesteps += 1
+        } while xPeriod == nil || yPeriod == nil || zPeriod == nil
+        return try computeLCM(values: [xPeriod!, yPeriod!, zPeriod!])
     }
 }
+enum LCMError: Error {
+    case wrongNumberOfValues(count: Int)
+}
+
+// swiftlint:disable identifier_name
+func gcd_recursion(_ a: Int, _ b: Int) -> Int {
+    // from https://rosettacode.org/wiki/Greatest_common_divisor#Swift
+    return b == 0 ? a : gcd_recursion(b, a % b)
+}
+
+func computeLCM(values: [Int]) throws -> Int {
+
+    // Hardcoded for three values
+    if values.count != 3 {
+        throw LCMError.wrongNumberOfValues(count: values.count)
+    }
+    let a = values[0]
+    let b = values[1]
+    let c = values[2]
+
+    let lcm_a_b = a * b / gcd_recursion(a, b)
+    let result = lcm_a_b * c / gcd_recursion(lcm_a_b, c)
+    return result
+}
+// swiftlint:enable identifier_name
 
 struct Vector {
     //swiftlint:disable identifier_name
@@ -129,5 +216,5 @@ func constructMoons(input: String) -> [Moon] {
 
 func daytwelve(contents: String) throws -> String {
     let solver = DayTwelveSolver(data: contents)
-    return "Part 1: \(solver.solvePartOne()) Part 2: \(solver.solvePartTwo())"
+    return "Part 1: \(solver.solvePartOne()) Part 2: \(try solver.solvePartTwo())"
 }
