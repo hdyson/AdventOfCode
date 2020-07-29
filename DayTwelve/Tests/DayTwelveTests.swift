@@ -8,7 +8,7 @@
 
 import XCTest
 
-class constructMoon: XCTestCase {
+class TestConstructMoon: XCTestCase {
 
     var moons=[Moon]()
 
