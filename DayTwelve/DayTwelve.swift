@@ -33,7 +33,7 @@ struct DayTwelveSolver {
         }
         return energy
     }
-
+    // swiftlint:disable function_body_length
     func solvePartTwo() throws -> Int {
         // Requirements
         // 1. Find how many steps would be needed for all moons to have the same position and velocity as
@@ -100,6 +100,8 @@ struct DayTwelveSolver {
         return try computeLCM(values: [xPeriod!, yPeriod!, zPeriod!])
     }
 }
+// swiftlint:enable function_body_length
+
 enum LCMError: Error {
     case wrongNumberOfValues(count: Int)
 }
