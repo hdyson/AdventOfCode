@@ -15,9 +15,9 @@ class DayNineParser: Computer {
 func daynine(contents: String) throws -> String {
     let partOne = DayNineParser()
     partOne.input = 1
-    _ = try partOne.parse(script: contents)
+    _ = try partOne.parseAndExecute(script: contents)
     let partTwo = DayNineParser()
     partTwo.input = 2
-    _ = try partTwo.parse(script: contents)
+    _ = try partTwo.parseAndExecute(script: contents)
     return "Part 1: \(partOne.output) Part 2: \(partTwo.output)"
 }

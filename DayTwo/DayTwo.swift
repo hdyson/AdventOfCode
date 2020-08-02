@@ -27,7 +27,7 @@ class DayTwoParser: Computer {
         super.init()
     }
 
-    override func parse(script: String = "") throws -> String {
+    override func parseAndExecute(script: String = "") throws -> String {
         if script == "" {
             memory = try execute(programme: memory)
             let resultStrings = memory.asStringArray()
@@ -55,7 +55,7 @@ class DayTwoParser: Computer {
 func part1(contents: String) throws -> String {
     //Day Two part 1
     let parser = DayTwoParser(noun: 12, verb: 2)
-    let result = try parser.parse(script: contents)
+    let result = try parser.parseAndExecute(script: contents)
 
     //Only want to print first value (see puzzle text again)
     return result.components(separatedBy: ",")[0]
@@ -71,7 +71,7 @@ func part2(contents: String) throws -> Int {
     outerloop: for noun in 0 ... 99 {
         for verb in 0 ... 99 {
             let parser = DayTwoParser(noun: noun, verb: verb)
-            let output = try parser.parse(script: contents)
+            let output = try parser.parseAndExecute(script: contents)
             let computed = Int(output.components(separatedBy: ",")[0])
             if computed == target {
                 result = 100 * noun + verb

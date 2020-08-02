@@ -19,7 +19,7 @@ class DayNineTests: XCTestCase {
 
         let expected = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
 
-        _ = try! daynine.parse(script: testString)
+        _ = try! daynine.parseAndExecute(script: testString)
         let actual = daynine.output
 
         XCTAssertEqual(actual, expected)
@@ -30,7 +30,7 @@ class DayNineTests: XCTestCase {
 
         let expected = 16
 
-        _ = try! daynine.parse(script: testString)
+        _ = try! daynine.parseAndExecute(script: testString)
         let actual = daynine.output[0].digits.count
 
         XCTAssertEqual(actual, expected)
@@ -41,7 +41,7 @@ class DayNineTests: XCTestCase {
 
         let expected = 1125899906842624
 
-        _ = try! daynine.parse(script: testString)
+        _ = try! daynine.parseAndExecute(script: testString)
         let actual = daynine.output[0]
 
         XCTAssertEqual(actual, expected)

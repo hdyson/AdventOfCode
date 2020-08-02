@@ -31,14 +31,17 @@ class Computer {
         instructionPointer = 0
     }
 
-    func parse(script: String) throws -> String {
-
+    func parse(script: String) {
         // Interprets script as instructions for IntCode computer
-
         let cleanedScript = script.trimmingCharacters(in: .whitespacesAndNewlines)
         let elementString = cleanedScript.components(separatedBy: separator)
         memory = ExtensibleArray(elementString.map {Int($0)!})
+    }
 
+    func parseAndExecute(script: String) throws -> String {
+        // Needed to fit the requirements for day 2, but most usages should call parse and execute
+        // individually.  Gives the memory state as a string for output.
+        parse(script: script)
         memory = try execute(programme: memory)
 
         let resultStrings = memory.asStringArray()

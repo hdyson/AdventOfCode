@@ -15,13 +15,13 @@ class TestDayTwo: XCTestCase {
     var daytwo = DayTwoParser()
 
     func testOpcode() {
-        XCTAssertThrowsError(try daytwo.parse(script: "98,0,0,0"))
+        XCTAssertThrowsError(try daytwo.parseAndExecute(script: "98,0,0,0"))
     }
 
     func testExample1() {
         let expected = "2,0,0,0,99"
         do {
-            let actual = try daytwo.parse(script: "1,0,0,0,99")
+            let actual = try daytwo.parseAndExecute(script: "1,0,0,0,99")
             XCTAssertEqual(actual, expected)
         } catch {
             XCTFail("Unexpected exception thrown")
@@ -31,7 +31,7 @@ class TestDayTwo: XCTestCase {
     func testExample2() {
         let expected = "2,3,0,6,99"
         do {
-            let actual = try daytwo.parse(script: "2,3,0,3,99")
+            let actual = try daytwo.parseAndExecute(script: "2,3,0,3,99")
             XCTAssertEqual(actual, expected)
         } catch {
             XCTFail("Unexpected exception thrown")
@@ -41,7 +41,7 @@ class TestDayTwo: XCTestCase {
     func testExample3() {
         let expected = "2,4,4,5,99,9801"
         do {
-            let actual = try daytwo.parse(script: "2,4,4,5,99,0")
+            let actual = try daytwo.parseAndExecute(script: "2,4,4,5,99,0")
             XCTAssertEqual(actual, expected)
         } catch {
             XCTFail("Unexpected exception thrown")
@@ -51,7 +51,7 @@ class TestDayTwo: XCTestCase {
     func testExample4() {
         let expected = "30,1,1,4,2,5,6,0,99"
         do {
-            let actual = try daytwo.parse(script: "1,1,1,4,99,5,6,0,99")
+            let actual = try daytwo.parseAndExecute(script: "1,1,1,4,99,5,6,0,99")
             XCTAssertEqual(actual, expected)
         } catch {
             XCTFail("Unexpected exception thrown")

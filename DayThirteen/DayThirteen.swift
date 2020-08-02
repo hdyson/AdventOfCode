@@ -34,7 +34,7 @@ struct DayThirteenSolver {
     func solvePartOne() -> Int {
         let computer = Computer()
         do {
-            try _ = computer.parse(script: data)
+            try _ = computer.parseAndExecute(script: data)
         } catch {
             print("Something went wrong parsing the input data")
             exit(-1)

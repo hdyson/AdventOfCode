@@ -33,7 +33,7 @@ class Solver {
                 let amplifier = DaySevenParser()
                 amplifier.input = output[0]  // input for next amplifier is output from previous
                 amplifier.phase = phases[index]
-                _ = try amplifier.parse(script: script)
+                _ = try amplifier.parseAndExecute(script: script)
                 output = amplifier.output
                 amplifiers.append(amplifier)
             }
@@ -56,7 +56,7 @@ class Solver {
                 amplifier.name = String(index)
                 amplifier.input = output[0]  // input for next amplifier is output from previous
                 amplifier.phase = phases[index]
-                _ = try amplifier.parse(script: script)
+                _ = try amplifier.parseAndExecute(script: script)
                 output = amplifier.output
                 amplifiers.append(amplifier)
             }
@@ -65,7 +65,7 @@ class Solver {
                 count += 1
                 for amplifier in amplifiers {
                     amplifier.input = output[0]
-                    _ = try amplifier.parse()
+                    _ = try amplifier.parseAndExecute()
                     output = amplifier.output
                 }
             }
@@ -105,7 +105,7 @@ class Solver {
             super.init()
         }
 
-        override func parse(script: String = "") throws -> String {
+        override func parseAndExecute(script: String = "") throws -> String {
             if script == "" {
                 memory = try execute(programme: memory)
                 let resultStrings = memory.asStringArray()
